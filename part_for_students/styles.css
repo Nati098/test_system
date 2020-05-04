@@ -1,0 +1,21 @@
+html, body {
+  padding: 16px;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+table#mainInfo {
+  table-layout: fixed ;
+  width: 100% ;
+}
+
+td.questionsTd {
+  width: 50% ;
+}
+
+.list-group {
+  margin-left: 8px;
+  margin-right: 8px;
+}
