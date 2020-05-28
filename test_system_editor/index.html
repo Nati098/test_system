@@ -19,22 +19,25 @@
   <!--  <script>-->
 <!--    delete module.exports-->
 <!--  </script>-->
-<!--  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>-->
+  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
 <!--  <script src="./window.js" charset="utf-8"></script>-->
 
 </head>
 
 <body>
 
-  <div class="wrapper-editor">
+  <div id="main">
 
   <div class="table-add" style="margin-left: 8px; margin-top: 8px">
     <h1>Список курсов</h1>
 
-    <a role="button" href="edit_course.html" class="btn btn-outline-dark-green">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" onclick="onEditCourseBtnClick()" class="btn btn-outline-dark-green">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" class="btn btn-outline-orange">Загрузить<i class="fas fa-desktop pl-1"></i></a>
+    <a role="button" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+
   </div><br>
 
-  <table id="listOfItems" class="table table-bordered table-striped" cellspacing="0" width="100%">
+  <table class="table table-bordered table-striped" cellspacing="0" width="100%">
     <thead>
     <tr>
 
@@ -64,12 +67,198 @@
   </table>
 </div>
 
+  <div id="edit_course">
+    <div id="courseInfo">
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Название курса: </span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <p>Тесты:</p>
+
+      <a role="button" onclick="onEditTestBtnClick()" class="btn btn-outline-dark-green">Добавить новый тест<i class="fas fa-plus-square pl-1"></i></a>
+      <a role="button" href="index.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+
+    </div>
+
+    <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+
+        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>
+        <th class="th-sm" style="size: 16px; text-align: center"><b>Название</b></th>
+        <th class="th-sm "> </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row" style="text-align: center">1</th>
+        <td style="text-align:center">Test1</td>
+        <td style="text-align:center">
+              <span>
+                  <a role="button" href="edit_section.html" class="btn btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
+                  <a role="button" class="btn btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+              </span>
+        </td>
+
+      </tr>
+
+      </tbody>
+      <tfoot>
+
+      </tfoot>
+    </table>
+
+  </div>
+
+  <div id="edit_test">
+    <div id="testInfo" style="display: block">
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="nameCourse1">Название курса: </span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
+      </div>
+
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="nameSection">Название теста: </span>
+        </div>
+        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div>
+
+      <a role="button" onclick="onEditQuestionBtnClick()" class="btn btn-outline-dark-green">Добавить вопрос<i class="fas fa-plus-square pl-1"></i></a>
+      <a role="button" href="edit_course.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+
+    </div>
+
+    <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+      <thead>
+      <tr>
+
+        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>
+        <th class="th-sm" style="size: 16px; text-align: center"><b>Вопрос</b></th>
+        <th class="th-sm" style="size: 16px; text-align: center"><b>Ответ</b></th>
+        <th class="th-sm" style="size: 16px; text-align: center"><b>Оценка</b></th>
+        <th class="th-sm"> </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row" style="text-align:center">1</th>
+        <td style="text-align:center">Sect1</td>
+        <td style="text-align:center">Sect1</td>
+        <td style="text-align:center">Sect1</td>
+        <td style="text-align:center">
+                      <span>
+                          <a role="button" href="edit_question.html" class="btn btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
+                          <a role="button" class="btn btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+                      </span>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <div id="edit_question">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="nameQuestion">Вопрос: </span>
+      </div>
+      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    </div>
+
+    <table class="table-responsive-md">
+      <table id="questions" class="table table-borderless" cellspacing="0" >
+        <thead>
+        <tr>
+          <th class="th-sm" style="height:1px; white-space:nowrap;"><p>Варианты ответа:</p></th>
+          <th class="th-sm"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td style="text-align:center" class="question">
+            <div class="input-group mb-3 question">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="nameCourse2">1) </span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+            <div class="input-group mb-3 form-group w-25">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="mark">Балл за правильный ответ </span>
+              </div>
+              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </div>
+
+          </td>
+
+          <td style="width:1px; white-space:nowrap;">
+            <a role="button" class="btn btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+          </td>
+
+        </tr>
+
+        </tbody>
+        <tfoot>
+        <tr>
+          <th class="th-sm"><p>
+            <a role="button" class="btn btn-outline-dark-green btn-sm"><i class="fas fa-plus pl-1"></i></a><br><br>
+          </p></th>
+          <th class="th-sm"></th>
+        </tr>
+        </tfoot>
+      </table>
+
+    </table>
+
+    <a role="button" href="edit_section.html" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
+    <a role="button" href="edit_section.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+
+  </div>
+
 
   <!-- jQuery, Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 
 </html>
+
+
+<script>
+  function onEditCourseBtnClick(){
+    $("main").hide();
+    $("edit_course").show();
+    $("edit_test").hide();
+    $("edit_question").hide();
+  }
+
+  function onEditTestBtnClick(){
+    $("main").hide();
+    $("edit_course").hide();
+    $("edit_test").show();
+    $("edit_question").hide();
+  }
+
+  function onEditQuestionBtnClick(){
+    $("main").hide();
+    $("edit_course").hide();
+    $("edit_test").hide();
+    $("edit_question").show();
+  }
+
+
+</script>
