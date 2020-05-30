@@ -16,10 +16,16 @@
 
   <!-- Scripts -->
   <script src="https://kit.fontawesome.com/85609d285c.js" crossorigin="anonymous"></script>
+
+  <!-- jQuery, Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
   <!--  <script>-->
 <!--    delete module.exports-->
 <!--  </script>-->
-  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+<!--  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>-->
 <!--  <script src="./window.js" charset="utf-8"></script>-->
 
 </head>
@@ -28,33 +34,33 @@
 
   <div id="main">
 
-  <div class="table-add" style="margin-left: 8px; margin-top: 8px">
+  <div style="margin-left: 8px; margin-top: 8px">
     <h1>Список курсов</h1>
 
-    <a role="button" onclick="onEditCourseBtnClick()" class="btn btn-outline-dark-green">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-orange">Загрузить<i class="fas fa-desktop pl-1"></i></a>
+    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" class="btn btn-outline-orange" onclick="alert('Load!')">Загрузить<i class="fas fa-desktop pl-1"></i></a>
     <a role="button" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
 
   </div><br>
 
-  <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+  <table id="table-courses" class="table table-bordered table-striped" cellspacing="0" width="100%">
     <thead>
     <tr>
 
-      <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>
+<!--      <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
       <th class="th-sm" style="size: 16px; text-align: center"><b>Курс</b></th>
       <th class="th-sm"> </th>
 
     </tr>
     </thead>
     <tbody>
-    <tr>
-      <th scope="row" style="text-align: center">1</th>
+    <tr data-name="Математические модели физических процессов">
+<!--      <th scope="row" style="text-align: center">1</th>-->
       <td style="text-align:center">Математические модели физических процессов</td>
       <td style="text-align:center">
           <span>
-            <a role="button" href="edit_course.html" class="btn btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
-            <a role="button" class="btn btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+            <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
+            <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
           </span>
       </td>
 
@@ -67,41 +73,41 @@
   </table>
 </div>
 
-  <div id="edit_course">
+  <div id="edit_course" style="display: none">
     <div id="courseInfo">
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default">Название курса: </span>
+          <span id="inputGroup-sizing-default" class="input-group-text">Название курса: </span>
         </div>
-        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input id='course-name-input' class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
 
       <p>Тесты:</p>
 
-      <a role="button" onclick="onEditTestBtnClick()" class="btn btn-outline-dark-green">Добавить новый тест<i class="fas fa-plus-square pl-1"></i></a>
-      <a role="button" href="index.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+      <a role="button" class="btn btn-outline-dark-green" onclick="onCreateTestBtnClick()">Добавить новый тест<i class="fas fa-plus-square pl-1"></i></a>
+      <a role="button" class="btn btn-outline-indigo" onclick="onSaveCourseBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
 
     </div>
 
-    <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+    <table id="table-tests" class="table table-bordered table-striped" cellspacing="0" width="100%">
       <thead>
       <tr>
 
-        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>
+<!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
         <th class="th-sm" style="size: 16px; text-align: center"><b>Название</b></th>
         <th class="th-sm "> </th>
 
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row" style="text-align: center">1</th>
+      <tr data-name="Test1">
+<!--        <th scope="row" style="text-align: center">1</th>-->
         <td style="text-align:center">Test1</td>
         <td style="text-align:center">
               <span>
-                  <a role="button" href="edit_section.html" class="btn btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
-                  <a role="button" class="btn btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+                  <a role="button" class="btn row-edit btn-outline-default" >Изменить<i class="fas fa-edit pl-1"></i></a>
+                  <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
               </span>
         </td>
 
@@ -115,50 +121,48 @@
 
   </div>
 
-  <div id="edit_test">
+  <div id="edit_test" style="display: none">
     <div id="testInfo" style="display: block">
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="nameCourse1">Название курса: </span>
+          <span class="input-group-text">Название курса: </span>
         </div>
-        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
+        <input id="course-name-field" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
       </div>
 
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text" id="nameSection">Название теста: </span>
+          <span id="nameSection" class="input-group-text">Название теста: </span>
         </div>
-        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        <input id="test-name-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
       </div>
 
-      <a role="button" onclick="onEditQuestionBtnClick()" class="btn btn-outline-dark-green">Добавить вопрос<i class="fas fa-plus-square pl-1"></i></a>
-      <a role="button" href="edit_course.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+      <a role="button" class="btn btn-outline-dark-green" onclick="onCreateQuestionBtnClick()">Добавить вопрос<i class="fas fa-plus-square pl-1"></i></a>
+      <a role="button" class="btn btn-outline-indigo" onclick="onSaveTestBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
 
     </div>
 
-    <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+    <table id="table-questions" class="table table-bordered table-striped" cellspacing="0" width="100%">
       <thead>
       <tr>
 
-        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>
+<!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
         <th class="th-sm" style="size: 16px; text-align: center"><b>Вопрос</b></th>
-        <th class="th-sm" style="size: 16px; text-align: center"><b>Ответ</b></th>
         <th class="th-sm" style="size: 16px; text-align: center"><b>Оценка</b></th>
         <th class="th-sm"> </th>
 
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <th scope="row" style="text-align:center">1</th>
-        <td style="text-align:center">Sect1</td>
+      <tr data-body="Sect1" data-mark="Sect1">
+<!--        <th scope="row" style="text-align:center">1</th>-->
         <td style="text-align:center">Sect1</td>
         <td style="text-align:center">Sect1</td>
         <td style="text-align:center">
                       <span>
-                          <a role="button" href="edit_question.html" class="btn btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
-                          <a role="button" class="btn btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+                          <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
+                          <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
                       </span>
         </td>
 
@@ -168,16 +172,22 @@
 
   </div>
 
-  <div id="edit_question">
+  <div id="edit_question" style="display: none">
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="nameQuestion">Вопрос: </span>
       </div>
-      <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      <input id="question-name-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+    </div>
+    <div class="input-group mb-3 form-group w-25">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="mark">Балл за правильный ответ </span>
+      </div>
+      <input id="mark-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
     </div>
 
     <table class="table-responsive-md">
-      <table id="questions" class="table table-borderless" cellspacing="0" >
+      <table id="table-answers" class="table table-borderless" cellspacing="0" >
         <thead>
         <tr>
           <th class="th-sm" style="height:1px; white-space:nowrap;"><p>Варианты ответа:</p></th>
@@ -189,22 +199,15 @@
           <td style="text-align:center" class="question">
             <div class="input-group mb-3 question">
               <div class="input-group-prepend">
-                <span class="input-group-text" id="nameCourse2">1) </span>
+                <span id="answer-number" class="input-group-text">1) </span>
               </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-            </div>
-
-            <div class="input-group mb-3 form-group w-25">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="mark">Балл за правильный ответ </span>
-              </div>
-              <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+              <input id="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
             </div>
 
           </td>
 
           <td style="width:1px; white-space:nowrap;">
-            <a role="button" class="btn btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
+            <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
           </td>
 
         </tr>
@@ -213,7 +216,7 @@
         <tfoot>
         <tr>
           <th class="th-sm"><p>
-            <a role="button" class="btn btn-outline-dark-green btn-sm"><i class="fas fa-plus pl-1"></i></a><br><br>
+            <a role="button" class="btn btn-outline-dark-green btn-sm" onclick="onCreateAnswerBtnClick()"><i class="fas fa-plus pl-1"></i></a><br><br>
           </p></th>
           <th class="th-sm"></th>
         </tr>
@@ -222,16 +225,10 @@
 
     </table>
 
-    <a role="button" href="edit_section.html" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
-    <a role="button" href="edit_section.html" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+    <a role="button" onclick="{$('#edit_test').toggle(); $('#edit_question').toggle();}" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
+    <a role="button" onclick="onSaveQuestionBtnClick()" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
 
   </div>
-
-
-  <!-- jQuery, Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </body>
 
@@ -239,26 +236,194 @@
 
 
 <script>
-  function onEditCourseBtnClick(){
-    $("main").hide();
-    $("edit_course").show();
-    $("edit_test").hide();
-    $("edit_question").hide();
+  const $tableClass = $('.table');
+
+
+
+  function onCreateCourseBtnClick(){
+    $('#course-name-input').val('');
+
+    $("#main").hide();
+    $("#edit_course").show();
+    $("#edit_test").hide();
+    $("#edit_question").hide();
   }
 
-  function onEditTestBtnClick(){
-    $("main").hide();
-    $("edit_course").hide();
-    $("edit_test").show();
-    $("edit_question").hide();
+  $('#table-courses').on('click', '.row-edit', function () {
+    let name = $(this).parents("tr").attr('data-name');
+
+    onCreateCourseBtnClick();
+
+    $('#course-name-input').val(name);
+    // TODO: здесь еще заполнять таблицу с тестами этого курса
+  });
+
+
+
+  function onSaveCourseBtnClick(){
+    // TODO: если это был режим Edit, то не добавлять новую строку, а просто изменить текущую
+
+    if ($('#course-name-input').val() === "") {
+      alert('Не заполнено поле с названием курса! Проверьте и повторите попытку.');
+      return;
+    }
+
+    addRow($('#table-courses'), $('#course-name-input').val())
+    $("#main").toggle();
+    $("#edit_course").toggle();
   }
 
-  function onEditQuestionBtnClick(){
-    $("main").hide();
-    $("edit_course").hide();
-    $("edit_test").hide();
-    $("edit_question").show();
+  function onCreateTestBtnClick(){
+    $('#course-name-field').val($('#course-name-input').val());
+    $('#test-name-input').val('');
+
+    $("#main").hide();
+    $("#edit_course").hide();
+    $("#edit_test").show();
+    $("#edit_question").hide();
   }
+
+  $('#table-tests').on('click', '.row-edit', function () {
+    let name = $(this).parents("tr").attr('data-name');
+
+    onCreateTestBtnClick();
+
+    $('#test-name-input').val(name);
+    // TODO: здесь еще заполнять таблицу с вопросами этого теста
+  });
+
+
+
+  function onSaveTestBtnClick(){
+    // TODO: если это был режим Edit, то не добавлять новую строку, а просто изменить текущую
+
+    if ($('#test-name-input').val() === "") {
+      alert('Не заполнено поле с названием теста! Проверьте и повторите попытку.');
+      return;
+    }
+
+    addRow($('#table-tests'), $('#test-name-input').val())
+    $("#edit_course").toggle();
+    $("#edit_test").toggle();
+  }
+
+  function onCreateQuestionBtnClick() {
+    $('#question-name-input').val('');
+    $('#mark-input').val('');
+    $('#table-answers tbody').empty();
+
+    $("#main").hide();
+    $("#edit_course").hide();
+    $("#edit_test").hide();
+    $("#edit_question").show();
+  }
+
+  $('#table-questions').on('click', '.row-edit', function () {
+    onCreateQuestionBtnClick();
+
+    let body = $(this).parents("tr").attr('data-body');
+    let mark = $(this).parents("tr").attr('data-mark');
+
+    $('#question-name-input').val(body);
+    $('#mark-input').val(mark);
+
+    // TODO: здесь еще заполнять ответы!!!
+
+  });
+
+  function addRowQuestion($tableID, body='Пример', mark='1') {
+    let newRow = $('<tr data-body='+body+' data-mark='+mark+'>');
+    let cols = "";
+
+    cols += '<td style="text-align:center">'+body+'</td>';
+    cols += '<td style="text-align:center">'+mark+'</td>';
+
+    cols += '<td style="text-align:center">\n' +
+            '   <span>\n' +
+            '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
+            '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+            '   </span>\n' +
+            '</td>';
+    cols += '</tr>'
+    newRow.append(cols);
+
+    $tableID.append(newRow);
+  }
+
+
+
+
+  function onSaveQuestionBtnClick(){
+    let body = $('#question-name-input').val();
+    let mark = $('#mark-input').val();
+    if (body === "" || mark === "") {
+      alert('Не заполнено поле с содержанием вопроса или балла за вопрос! Проверьте эти поля и повторите попытку.');
+      return;
+    }
+    addRowQuestion($('#table-questions'), body, mark);
+
+    $("#edit_test").toggle();
+    $("#edit_question").toggle();
+  }
+
+  function addRowAnswer($tableID, id=1, name='Пример') {
+    let newRow = $("<tr>");
+    let cols = "";
+
+    cols += '<td style="text-align:center" class="question">\n' +
+            '   <div class="input-group mb-3 question">\n' +
+            '       <div class="input-group-prepend">\n' +
+            '            <span class="input-group-text">'+id+') </span>\n' +
+            '  </div>\n' +
+            '       <input id="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">\n' +
+            '  </div>\n' +
+            '</td>';
+
+    cols += '<td style="width:1px; white-space:nowrap;">\n' +
+            '    <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+            '</td>';
+    cols += '</tr>'
+    newRow.append(cols);
+
+    //if it doesn't work, use: $tableID.find('tbody tr:last').after(newRow);
+    $tableID.append(newRow);
+  }
+
+  function onCreateAnswerBtnClick() {
+
+    let table = document.getElementById("table-answers");
+    let newRowIndex = table.rows.length-1; // last=len-2, because we have tfoot
+
+    addRowAnswer($('#table-answers'), newRowIndex, '')
+  }
+
+
+
+  // adding for courses table and tests table - they have similar structure
+  function addRow($tableID, name='Пример') {
+    let newRow = $("<tr data-name='"+name+"'>");
+    let cols = "";
+    // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+
+    cols += '<td style="text-align:center">'+name+'</td>';
+
+    cols += '<td style="text-align:center">\n' +
+            '   <span>\n' +
+            '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
+            '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+            '   </span>\n' +
+            '</td>';
+    cols += '</tr>'
+    newRow.append(cols);
+
+    $tableID.append(newRow);
+  }
+
+  $tableClass.on('click', '.row-remove', function () {
+    if (confirm('Вы уверены, что хотите удалить?')) {
+      $(this).parents('tr').detach();
+    }
+  });
 
 
 </script>
