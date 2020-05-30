@@ -38,8 +38,8 @@
     <h1>Список курсов</h1>
 
     <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-orange" onclick="alert('Load!')">Загрузить<i class="fas fa-desktop pl-1"></i></a>
-    <a role="button" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
+    <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i class="fas fa-desktop pl-1"></i></a>
+    <a role="button" class="btn btn-outline-indigo" onclick="onSaveBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
 
   </div><br>
 
@@ -236,11 +236,17 @@
 
 
 <script>
-  const $tableClass = $('.table');
+
+  let isCourseInEditMode = false;
+  let rowCourseBuffer = null;
+  let isTestInEditMode = false;
+  let rowTestBuffer = null;
+  let isQuestionInEditMode = false;
+  let rowQuestionBuffer = null;
 
 
 
-  function onCreateCourseBtnClick(){
+  function onCreateCourseBtnClick() {
     $('#course-name-input').val('');
 
     $("#main").hide();
@@ -249,28 +255,59 @@
     $("#edit_question").hide();
   }
 
+  function onLoadBtnClick() {
+      // TODO load btn
+      alert('Load!');
+  }
+
+  function onSaveBtnClick() {
+      // TODO save btn
+      alert('Save!');
+  }
+
   $('#table-courses').on('click', '.row-edit', function () {
-    let name = $(this).parents("tr").attr('data-name');
+      isCourseInEditMode = true;
+      rowCourseBuffer = $(this).parents("tr");
 
-    onCreateCourseBtnClick();
+      let name = $(this).parents("tr").attr('data-name');
 
-    $('#course-name-input').val(name);
-    // TODO: здесь еще заполнять таблицу с тестами этого курса
+      onCreateCourseBtnClick();
+
+      $('#course-name-input').val(name);
+      // TODO: добавить заполнение таблицы с тестами этого курса
   });
 
 
 
   function onSaveCourseBtnClick(){
-    // TODO: если это был режим Edit, то не добавлять новую строку, а просто изменить текущую
-
     if ($('#course-name-input').val() === "") {
       alert('Не заполнено поле с названием курса! Проверьте и повторите попытку.');
       return;
     }
 
-    addRow($('#table-courses'), $('#course-name-input').val())
+    if (isCourseInEditMode) {
+        // TODO: edit mode: перезапись записи
+        alert('Edit course mode');
+
+        if (!rowCourseBuffer) {
+            alert('Что-то пошло не так! Course Buffer is null!');
+            return;
+        }
+
+        alert(rowCourseBuffer.attr('data-name'));
+
+        rowCourseBuffer.attr('data-name', $('#course-name-input').val());
+
+        isCourseInEditMode = false;
+        // rowCourseBuffer = null;
+    }
+    else {
+        addRow($('#table-courses'), $('#course-name-input').val())
+    }
+
     $("#main").toggle();
     $("#edit_course").toggle();
+    alert(rowCourseBuffer.attr('data-name'));
   }
 
   function onCreateTestBtnClick(){
@@ -284,25 +321,42 @@
   }
 
   $('#table-tests').on('click', '.row-edit', function () {
-    let name = $(this).parents("tr").attr('data-name');
+      isTestInEditMode = true;
+      rowTestBuffer = $(this).parents("tr");
 
-    onCreateTestBtnClick();
+      let name = $(this).parents("tr").attr('data-name');
 
-    $('#test-name-input').val(name);
-    // TODO: здесь еще заполнять таблицу с вопросами этого теста
+      onCreateTestBtnClick();
+
+      $('#test-name-input').val(name);
+      // TODO:добавить заполнение таблицы с вопросами этого теста
   });
 
 
 
   function onSaveTestBtnClick(){
-    // TODO: если это был режим Edit, то не добавлять новую строку, а просто изменить текущую
-
     if ($('#test-name-input').val() === "") {
       alert('Не заполнено поле с названием теста! Проверьте и повторите попытку.');
       return;
     }
 
-    addRow($('#table-tests'), $('#test-name-input').val())
+    if (isTestInEditMode) {
+        // TODO: edit mode: перезапись записи
+        alert('Edit test mode');
+
+        if (!rowTestBuffer) {
+            alert('Что-то пошло не так! Test Buffer is null!');
+            return;
+        }
+        rowTestBuffer.attr('data-name', $('#test-name-input').val());
+
+        isTestInEditMode = false;
+        rowTestBuffer = null;
+    }
+    else {
+        addRow($('#table-tests'), $('#test-name-input').val());
+    }
+
     $("#edit_course").toggle();
     $("#edit_test").toggle();
   }
@@ -319,15 +373,18 @@
   }
 
   $('#table-questions').on('click', '.row-edit', function () {
-    onCreateQuestionBtnClick();
+      isQuestionInEditMode = true;
+      rowQuestionBuffer = $(this).parents("tr");
 
-    let body = $(this).parents("tr").attr('data-body');
-    let mark = $(this).parents("tr").attr('data-mark');
+      onCreateQuestionBtnClick();
 
-    $('#question-name-input').val(body);
-    $('#mark-input').val(mark);
+      let body = $(this).parents("tr").attr('data-body');
+      let mark = $(this).parents("tr").attr('data-mark');
 
-    // TODO: здесь еще заполнять ответы!!!
+      $('#question-name-input').val(body);
+      $('#mark-input').val(mark);
+
+      // TODO: добавить заполнение таблицы с ответами
 
   });
 
@@ -360,7 +417,24 @@
       alert('Не заполнено поле с содержанием вопроса или балла за вопрос! Проверьте эти поля и повторите попытку.');
       return;
     }
-    addRowQuestion($('#table-questions'), body, mark);
+
+    if (isQuestionInEditMode) {
+        alert('Edit qstn mode');
+
+        if (!rowQuestionBuffer) {
+            alert('Что-то пошло не так! Qstn Buffer is null!');
+            return;
+        }
+        // TODO: edit mode: перезапись записи
+        rowQuestionBuffer.attr('data-body', $('#question-name-input').val());
+        rowQuestionBuffer.attr('data-mark', $('#mark-input').val());
+
+        isQuestionInEditMode = false;
+        rowQuestionBuffer = null;
+    }
+    else {
+        addRowQuestion($('#table-questions'), body, mark);
+    }
 
     $("#edit_test").toggle();
     $("#edit_question").toggle();
@@ -419,7 +493,7 @@
     $tableID.append(newRow);
   }
 
-  $tableClass.on('click', '.row-remove', function () {
+  $('.table').on('click', '.row-remove', function () {
     if (confirm('Вы уверены, что хотите удалить?')) {
       $(this).parents('tr').detach();
     }
