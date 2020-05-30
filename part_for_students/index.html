@@ -22,6 +22,11 @@
   <body>
     <div id="main" class="wrapper-editor">
 
+      <h4>Добро пожаловать!</h4>
+      <p>Для продолжения жми кнопку:</p>
+      <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i class="fas fa-desktop pl-1"></i></a>
+      <p> </p>
+
       <table id="table-tests" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
@@ -193,6 +198,9 @@
   let tests = null;
 
 
+  function onLoadBtnClick() {
+    // TODO: load btn
+  }
 
   $('#table-tests').on('click', '.row-run', function () {
     let course = $(this).parents("tr").attr("data-course");
