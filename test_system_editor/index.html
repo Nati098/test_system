@@ -10,7 +10,8 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./styles.css">
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="css/mdb.min.css">
 
@@ -18,486 +19,824 @@
   <script src="https://kit.fontawesome.com/85609d285c.js" crossorigin="anonymous"></script>
 
   <!-- jQuery, Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+          crossorigin="anonymous"></script>
   <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+          integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+          crossorigin="anonymous"></script>
 
   <!--  <script>-->
-<!--    delete module.exports-->
-<!--  </script>-->
-<!--  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>-->
-<!--  <script src="./window.js" charset="utf-8"></script>-->
+  <!--    delete module.exports-->
+  <!--  </script>-->
+  <!--  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>-->
+  <!--  <script src="./window.js" charset="utf-8"></script>-->
 
 </head>
 
 <body>
-
-  <div id="main">
-
+<!--  ALL COURSES LIST PAGE-->
+<div id="main">
   <div style="margin-left: 8px; margin-top: 8px">
     <h1>Список курсов</h1>
-
-    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i class="fas fa-desktop pl-1"></i></a>
+    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i
+        class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i
+        class="fas fa-desktop pl-1"></i></a>
     <a role="button" class="btn btn-outline-indigo" onclick="onSaveBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
+  </div>
 
-  </div><br>
+  <br>
 
   <table id="table-courses" class="table table-bordered table-striped" cellspacing="0" width="100%">
     <thead>
     <tr>
-
-<!--      <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
+      <!--      <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
       <th class="th-sm" style="size: 16px; text-align: center"><b>Курс</b></th>
-      <th class="th-sm"> </th>
-
+      <th class="th-sm"></th>
     </tr>
     </thead>
-    <tbody>
-    <tr data-name="Математические модели физических процессов">
-<!--      <th scope="row" style="text-align: center">1</th>-->
-      <td style="text-align:center">Математические модели физических процессов</td>
-      <td style="text-align:center">
-          <span>
-            <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
-            <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
-          </span>
-      </td>
-
-    </tr>
-
+    <tbody id="all-courses-table-list">
+    <!--  FILL ALL COURSES LIST HERE-->
     </tbody>
-    <tfoot>
-
-    </tfoot>
   </table>
 </div>
 
-  <div id="edit_course" style="display: none">
-    <div id="courseInfo">
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span id="inputGroup-sizing-default" class="input-group-text">Название курса: </span>
-        </div>
-        <input id='course-name-input' class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+<!--  COURSE PAGE-->
+<div id="edit_course" style="display: none">
+  <div id="courseInfo">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span id="inputGroup-sizing-default" class="input-group-text">Название курса: </span>
       </div>
-
-      <p>Тесты:</p>
-
-      <a role="button" class="btn btn-outline-dark-green" onclick="onCreateTestBtnClick()">Добавить новый тест<i class="fas fa-plus-square pl-1"></i></a>
-      <a role="button" class="btn btn-outline-indigo" onclick="onSaveCourseBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
-
+      <input id='course-name-input' class="form-control" type="text" aria-label="Default"
+             aria-describedby="inputGroup-sizing-default">
     </div>
 
-    <table id="table-tests" class="table table-bordered table-striped" cellspacing="0" width="100%">
+    <p>Тесты:</p>
+
+    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateTestBtnClick()">Добавить новый тест<i
+        class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" class="btn btn-outline-indigo" onclick="onSaveCourseBtnClick()">Сохранить<i
+        class="fas fa-save pl-1"></i></a>
+  </div>
+
+  <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+      <th class="th-sm" style="size: 16px; text-align: center"><b>Название</b></th>
+      <th class="th-sm "></th>
+    </tr>
+    </thead>
+    <tbody id="table-tests">
+    <!--  FILL ALL TESTS LIST HERE-->
+    </tbody>
+  </table>
+</div>
+
+<!--  TEST PAGE-->
+<div id="edit_test" style="display: none">
+  <div id="testInfo" style="display: block">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Название курса: </span>
+      </div>
+      <input id="course-name-field" class="form-control" type="text" aria-label="Default"
+             aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span id="nameSection" class="input-group-text">Название теста: </span>
+      </div>
+      <input id="test-name-input" class="form-control" type="text" aria-label="Default"
+             aria-describedby="inputGroup-sizing-default">
+    </div>
+
+    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateQuestionBtnClick()">Добавить вопрос<i
+        class="fas fa-plus-square pl-1"></i></a>
+    <a role="button" class="btn btn-outline-indigo" onclick="onSaveTestBtnClick()">Сохранить<i
+        class="fas fa-save pl-1"></i></a>
+  </div>
+
+  <table class="table table-bordered table-striped" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+      <!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
+      <th class="th-sm" style="size: 16px; text-align: center"><b>Вопрос</b></th>
+      <th class="th-sm" style="size: 16px; text-align: center"><b>Оценка</b></th>
+      <th class="th-sm"></th>
+    </tr>
+    </thead>
+    <tbody id="table-questions">
+    <!--  FILL ALL QUESTIONS LIST HERE-->
+    </tbody>
+  </table>
+</div>
+
+<!--  QUESTION PAGE-->
+<div id="edit_question" style="display: none">
+  <div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="nameQuestion">Вопрос: </span>
+    </div>
+    <input id="question-name-input" class="form-control" type="text" aria-label="Default"
+           aria-describedby="inputGroup-sizing-default">
+  </div>
+  <div class="input-group mb-3 form-group w-25">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="mark">Балл за правильный ответ </span>
+    </div>
+    <input id="mark-input" class="form-control" type="text" aria-label="Default"
+           aria-describedby="inputGroup-sizing-default">
+  </div>
+
+  <table class="table-responsive-md">
+    <table class="table table-borderless" cellspacing="0">
       <thead>
       <tr>
-
-<!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
-        <th class="th-sm" style="size: 16px; text-align: center"><b>Название</b></th>
-        <th class="th-sm "> </th>
-
+        <th class="th-sm" style="height:1px; white-space:nowrap;"><p>Варианты ответа:</p></th>
+        <th class="th-sm"></th>
       </tr>
       </thead>
-      <tbody>
-      <tr data-name="Test1">
-<!--        <th scope="row" style="text-align: center">1</th>-->
-        <td style="text-align:center">Test1</td>
-        <td style="text-align:center">
-              <span>
-                  <a role="button" class="btn row-edit btn-outline-default" >Изменить<i class="fas fa-edit pl-1"></i></a>
-                  <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
-              </span>
-        </td>
-
-      </tr>
-
+      <tbody id="table-answers">
+      <!--  FILL ALL ANSWERS LIST HERE-->
       </tbody>
-      <tfoot>
+      <tfoot id="table-questions-footer">
 
       </tfoot>
     </table>
+  </table>
 
-  </div>
-
-  <div id="edit_test" style="display: none">
-    <div id="testInfo" style="display: block">
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span class="input-group-text">Название курса: </span>
-        </div>
-        <input id="course-name-field" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
-      </div>
-
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <span id="nameSection" class="input-group-text">Название теста: </span>
-        </div>
-        <input id="test-name-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-      </div>
-
-      <a role="button" class="btn btn-outline-dark-green" onclick="onCreateQuestionBtnClick()">Добавить вопрос<i class="fas fa-plus-square pl-1"></i></a>
-      <a role="button" class="btn btn-outline-indigo" onclick="onSaveTestBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
-
-    </div>
-
-    <table id="table-questions" class="table table-bordered table-striped" cellspacing="0" width="100%">
-      <thead>
-      <tr>
-
-<!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
-        <th class="th-sm" style="size: 16px; text-align: center"><b>Вопрос</b></th>
-        <th class="th-sm" style="size: 16px; text-align: center"><b>Оценка</b></th>
-        <th class="th-sm"> </th>
-
-      </tr>
-      </thead>
-      <tbody>
-      <tr data-body="Sect1" data-mark="Sect1">
-<!--        <th scope="row" style="text-align:center">1</th>-->
-        <td style="text-align:center">Sect1</td>
-        <td style="text-align:center">Sect1</td>
-        <td style="text-align:center">
-                      <span>
-                          <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>
-                          <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
-                      </span>
-        </td>
-
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div id="edit_question" style="display: none">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="nameQuestion">Вопрос: </span>
-      </div>
-      <input id="question-name-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-    </div>
-    <div class="input-group mb-3 form-group w-25">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="mark">Балл за правильный ответ </span>
-      </div>
-      <input id="mark-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-    </div>
-
-    <table class="table-responsive-md">
-      <table id="table-answers" class="table table-borderless" cellspacing="0" >
-        <thead>
-        <tr>
-          <th class="th-sm" style="height:1px; white-space:nowrap;"><p>Варианты ответа:</p></th>
-          <th class="th-sm"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-          <td style="text-align:center" class="question">
-            <div class="input-group mb-3 question">
-              <div class="input-group-prepend">
-                <span id="answer-number" class="input-group-text">1) </span>
-              </div>
-              <input id="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-            </div>
-
-          </td>
-
-          <td style="width:1px; white-space:nowrap;">
-            <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>
-          </td>
-
-        </tr>
-
-        </tbody>
-        <tfoot>
-        <tr>
-          <th class="th-sm"><p>
-            <a role="button" class="btn btn-outline-dark-green btn-sm" onclick="onCreateAnswerBtnClick()"><i class="fas fa-plus pl-1"></i></a><br><br>
-          </p></th>
-          <th class="th-sm"></th>
-        </tr>
-        </tfoot>
-      </table>
-
-    </table>
-
-    <a role="button" onclick="{$('#edit_test').toggle(); $('#edit_question').toggle();}" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
-    <a role="button" onclick="onSaveQuestionBtnClick()" class="btn btn-outline-indigo">Сохранить<i class="fas fa-save pl-1"></i></a>
-
-  </div>
+  <a role="button" onclick="{$('#edit_test').toggle(); $('#edit_question').toggle();}" class="btn btn-outline-indigo">Назад<i
+      class="fas fa-backward pl-1"></i></a>
+  <a role="button" onclick="onSaveQuestionBtnClick()" class="btn btn-outline-indigo">Сохранить<i
+      class="fas fa-save pl-1"></i></a>
+</div>
 
 </body>
-
 </html>
 
-
 <script>
+    let questions = [
+        {
+            "courseName": "Математич процессы",
+            "courseId": "course1",
+            "tests": [
+                {
+                    "testName": "testNo1",
+                    "testId": "test1",
+                    "questions": [
+                        {
+                            "questionId": "question1",
+                            "questionName": "How are you?",
+                            "cost": 10,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                        {
+                            "questionId": "question2",
+                            "questionName": "How qweqweqwe you?",
+                            "cost": 11,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                        {
+                            "questionId": "question3",
+                            "questionName": "QQyou?",
+                            "cost": 100,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    "testName": "testNo2",
+                    "testId": "test2",
+                    "questions": [
+                        {
+                            "questionId": "question2",
+                            "questionName": "How are qweqwe?",
+                            "cost": 5,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                    ]
+                }
+            ]
+        },
+        {
+            "courseName": "Физические процессы",
+            "courseId": "course2",
+            "tests": [
+                {
+                    "testName": "testNo3",
+                    "testId": "test1",
+                    "questions": [
+                        {
+                            "questionId": "question3",
+                            "questionName": "ЦРФФФЕ",
+                            "cost": 10,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                    ]
+                },
+                {
+                    "testName": "testNo2",
+                    "testId": "test2",
+                    "questions": [
+                        {
+                            "questionId": "question4",
+                            "questionName": "Hoуауаукпму",
+                            "cost": 5,
+                            "answers": [
+                                {
+                                    "answerId": "answer1",
+                                    "answerName": "qwe",
+                                    "right": true,
+                                },
+                                {
+                                    "answerId": "answer2",
+                                    "answerName": "rty",
+                                    "right": false,
+                                },
+                                {
+                                    "answerId": "answer3",
+                                    "answerName": "asd",
+                                    "right": false,
+                                },
+                            ]
+                        },
+                    ]
+                }
+            ]
+        }
+    ];
 
-  let isCourseInEditMode = false;
-  let rowCourseBuffer = null;
-  let isTestInEditMode = false;
-  let rowTestBuffer = null;
-  let isQuestionInEditMode = false;
-  let rowQuestionBuffer = null;
+    let isCourseInEditMode = false;
+    let rowCourseBuffer = null;
+    let isTestInEditMode = false;
+    let rowTestBuffer = null;
+    let isQuestionInEditMode = false;
+    let rowQuestionBuffer = null;
 
 
+    function onCreateCourseBtnClick() {
+        $('#course-name-input').val('');
 
-  function onCreateCourseBtnClick() {
-    $('#course-name-input').val('');
-
-    $("#main").hide();
-    $("#edit_course").show();
-    $("#edit_test").hide();
-    $("#edit_question").hide();
-  }
-
-  function onLoadBtnClick() {
-      // TODO load btn
-      alert('Load!');
-  }
-
-  function onSaveBtnClick() {
-      // TODO save btn
-      alert('Save!');
-  }
-
-  $('#table-courses').on('click', '.row-edit', function () {
-      isCourseInEditMode = true;
-      rowCourseBuffer = $(this).parents("tr");
-
-      let name = $(this).parents("tr").attr('data-name');
-
-      onCreateCourseBtnClick();
-
-      $('#course-name-input').val(name);
-      // TODO: добавить заполнение таблицы с тестами этого курса
-  });
-
-
-
-  function onSaveCourseBtnClick(){
-    if ($('#course-name-input').val() === "") {
-      alert('Не заполнено поле с названием курса! Проверьте и повторите попытку.');
-      return;
+        $("#main").hide();
+        $("#edit_course").show();
+        $("#edit_test").hide();
+        $("#edit_question").hide();
     }
 
-    if (isCourseInEditMode) {
-        // TODO: edit mode: перезапись записи
-        alert('Edit course mode');
+    function onLoadBtnClick() {
+        // TODO load btn
+        alert('Load!');
+    }
 
-        if (!rowCourseBuffer) {
-            alert('Что-то пошло не так! Course Buffer is null!');
+    function onSaveBtnClick() {
+        //TODO: serialize all
+
+
+        // TODO save btn
+        alert('Save!');
+    }
+
+
+    function onSaveCourseBtnClick() {
+        if ($('#course-name-input').val() === "") {
+            alert('Не заполнено поле с названием курса! Проверьте и повторите попытку.');
             return;
         }
 
+        if (isCourseInEditMode) {
+            // TODO: edit mode: перезапись записи
+            alert('Edit course mode');
+
+            if (!rowCourseBuffer) {
+                alert('Что-то пошло не так! Course Buffer is null!');
+                return;
+            }
+
+            alert(rowCourseBuffer.attr('data-name'));
+
+            rowCourseBuffer.attr('data-name', $('#course-name-input').val());
+
+            isCourseInEditMode = false;
+            // rowCourseBuffer = null;
+        } else {
+            addRow($('#table-courses'), $('#course-name-input').val())
+        }
+
+        $("#main").toggle();
+        $("#edit_course").toggle();
         alert(rowCourseBuffer.attr('data-name'));
-
-        rowCourseBuffer.attr('data-name', $('#course-name-input').val());
-
-        isCourseInEditMode = false;
-        // rowCourseBuffer = null;
-    }
-    else {
-        addRow($('#table-courses'), $('#course-name-input').val())
     }
 
-    $("#main").toggle();
-    $("#edit_course").toggle();
-    alert(rowCourseBuffer.attr('data-name'));
-  }
+    function onCreateTestBtnClick() {
+        $('#course-name-field').val($('#course-name-input').val());
+        $('#test-name-input').val('');
 
-  function onCreateTestBtnClick(){
-    $('#course-name-field').val($('#course-name-input').val());
-    $('#test-name-input').val('');
-
-    $("#main").hide();
-    $("#edit_course").hide();
-    $("#edit_test").show();
-    $("#edit_question").hide();
-  }
-
-  $('#table-tests').on('click', '.row-edit', function () {
-      isTestInEditMode = true;
-      rowTestBuffer = $(this).parents("tr");
-
-      let name = $(this).parents("tr").attr('data-name');
-
-      onCreateTestBtnClick();
-
-      $('#test-name-input').val(name);
-      // TODO:добавить заполнение таблицы с вопросами этого теста
-  });
-
-
-
-  function onSaveTestBtnClick(){
-    if ($('#test-name-input').val() === "") {
-      alert('Не заполнено поле с названием теста! Проверьте и повторите попытку.');
-      return;
+        $("#main").hide();
+        $("#edit_course").hide();
+        $("#edit_test").show();
+        $("#edit_question").hide();
     }
 
-    if (isTestInEditMode) {
-        // TODO: edit mode: перезапись записи
-        alert('Edit test mode');
+    $('#table-tests').on('click', '.row-edit', function () {
+        isTestInEditMode = true;
+        rowTestBuffer = $(this).parents("tr");
 
-        if (!rowTestBuffer) {
-            alert('Что-то пошло не так! Test Buffer is null!');
+        let name = $(this).parents("tr").attr('data-name');
+
+        onCreateTestBtnClick();
+
+        $('#test-name-input').val(name);
+        // TODO:добавить заполнение таблицы с вопросами этого теста
+    });
+
+    function onSaveTestBtnClick() {
+        if ($('#test-name-input').val() === "") {
+            alert('Не заполнено поле с названием теста! Проверьте и повторите попытку.');
             return;
         }
-        rowTestBuffer.attr('data-name', $('#test-name-input').val());
 
-        isTestInEditMode = false;
-        rowTestBuffer = null;
+        if (isTestInEditMode) {
+            // TODO: edit mode: перезапись записи
+            alert('Edit test mode');
+
+            if (!rowTestBuffer) {
+                alert('Что-то пошло не так! Test Buffer is null!');
+                return;
+            }
+            rowTestBuffer.attr('data-name', $('#test-name-input').val());
+
+            isTestInEditMode = false;
+            rowTestBuffer = null;
+        } else {
+            addRow($('#table-tests'), $('#test-name-input').val());
+        }
+
+        $("#edit_course").toggle();
+        $("#edit_test").toggle();
     }
-    else {
-        addRow($('#table-tests'), $('#test-name-input').val());
+
+    function onCreateQuestionBtnClick() {
+        $('#question-name-input').val('');
+        $('#mark-input').val('');
+        $('#table-answers tbody').empty();
+
+        $("#main").hide();
+        $("#edit_course").hide();
+        $("#edit_test").hide();
+        $("#edit_question").show();
     }
 
-    $("#edit_course").toggle();
-    $("#edit_test").toggle();
-  }
+    $('#table-questions').on('click', '.row-edit', function () {
+        isQuestionInEditMode = true;
+        rowQuestionBuffer = $(this).parents("tr");
 
-  function onCreateQuestionBtnClick() {
-    $('#question-name-input').val('');
-    $('#mark-input').val('');
-    $('#table-answers tbody').empty();
+        onCreateQuestionBtnClick();
 
-    $("#main").hide();
-    $("#edit_course").hide();
-    $("#edit_test").hide();
-    $("#edit_question").show();
-  }
+        let body = $(this).parents("tr").attr('data-body');
+        let mark = $(this).parents("tr").attr('data-mark');
 
-  $('#table-questions').on('click', '.row-edit', function () {
-      isQuestionInEditMode = true;
-      rowQuestionBuffer = $(this).parents("tr");
+        $('#question-name-input').val(body);
+        $('#mark-input').val(mark);
 
-      onCreateQuestionBtnClick();
+        // TODO: добавить заполнение таблицы с ответами
 
-      let body = $(this).parents("tr").attr('data-body');
-      let mark = $(this).parents("tr").attr('data-mark');
+    });
 
-      $('#question-name-input').val(body);
-      $('#mark-input').val(mark);
+    function addRowQuestion($tableID, body = 'Пример', mark = '1') {
+        let newRow = $('<tr data-body=' + body + ' data-mark=' + mark + '>');
+        let cols = "";
 
-      // TODO: добавить заполнение таблицы с ответами
+        cols += '<td style="text-align:center">' + body + '</td>';
+        cols += '<td style="text-align:center">' + mark + '</td>';
 
-  });
-
-  function addRowQuestion($tableID, body='Пример', mark='1') {
-    let newRow = $('<tr data-body='+body+' data-mark='+mark+'>');
-    let cols = "";
-
-    cols += '<td style="text-align:center">'+body+'</td>';
-    cols += '<td style="text-align:center">'+mark+'</td>';
-
-    cols += '<td style="text-align:center">\n' +
+        cols += '<td style="text-align:center">\n' +
             '   <span>\n' +
             '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
             '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
             '   </span>\n' +
             '</td>';
-    cols += '</tr>'
-    newRow.append(cols);
+        cols += '</tr>';
+        newRow.append(cols);
 
-    $tableID.append(newRow);
-  }
-
-
-
-
-  function onSaveQuestionBtnClick(){
-    let body = $('#question-name-input').val();
-    let mark = $('#mark-input').val();
-    if (body === "" || mark === "") {
-      alert('Не заполнено поле с содержанием вопроса или балла за вопрос! Проверьте эти поля и повторите попытку.');
-      return;
+        $tableID.append(newRow);
     }
 
-    if (isQuestionInEditMode) {
-        alert('Edit qstn mode');
-
-        if (!rowQuestionBuffer) {
-            alert('Что-то пошло не так! Qstn Buffer is null!');
+    function onSaveQuestionBtnClick() {
+        let body = $('#question-name-input').val();
+        let mark = $('#mark-input').val();
+        if (body === "" || mark === "") {
+            alert('Не заполнено поле с содержанием вопроса или балла за вопрос! Проверьте эти поля и повторите попытку.');
             return;
         }
-        // TODO: edit mode: перезапись записи
-        rowQuestionBuffer.attr('data-body', $('#question-name-input').val());
-        rowQuestionBuffer.attr('data-mark', $('#mark-input').val());
 
-        isQuestionInEditMode = false;
-        rowQuestionBuffer = null;
+        // questions
+        console.log(document.getElementsByClassName('answer1'));
+        if (isQuestionInEditMode) {
+            // alert('Edit qstn mode');
+
+            if (!rowQuestionBuffer) {
+                alert('Что-то пошло не так! Qstn Buffer is null!');
+                return;
+            }
+            // TODO: edit mode: перезапись записи
+            rowQuestionBuffer.attr('data-body', $('#question-name-input').val());
+            rowQuestionBuffer.attr('data-mark', $('#mark-input').val());
+
+            isQuestionInEditMode = false;
+            rowQuestionBuffer = null;
+        } else {
+            addRowQuestion($('#table-questions'), body, mark);
+        }
+
+        $("#edit_test").toggle();
+        $("#edit_question").toggle();
     }
-    else {
-        addRowQuestion($('#table-questions'), body, mark);
-    }
 
-    $("#edit_test").toggle();
-    $("#edit_question").toggle();
-  }
+    function addRowAnswer($tableID, id = 1, name = 'Пример') {
+        let newRow = $("<tr>");
+        let cols = "";
 
-  function addRowAnswer($tableID, id=1, name='Пример') {
-    let newRow = $("<tr>");
-    let cols = "";
-
-    cols += '<td style="text-align:center" class="question">\n' +
+        cols += '<td style="text-align:center" class="question">\n' +
             '   <div class="input-group mb-3 question">\n' +
             '       <div class="input-group-prepend">\n' +
-            '            <span class="input-group-text">'+id+') </span>\n' +
+            '            <span class="input-group-text">' + id + ') </span>\n' +
             '  </div>\n' +
-            '       <input id="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">\n' +
+            '       <input class="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">\n' +
             '  </div>\n' +
             '</td>';
 
-    cols += '<td style="width:1px; white-space:nowrap;">\n' +
+        cols += '<td style="width:1px; white-space:nowrap;">\n' +
             '    <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
             '</td>';
-    cols += '</tr>'
-    newRow.append(cols);
+        cols += '</tr>'
+        newRow.append(cols);
 
-    //if it doesn't work, use: $tableID.find('tbody tr:last').after(newRow);
-    $tableID.append(newRow);
-  }
+        //if it doesn't work, use: $tableID.find('tbody tr:last').after(newRow);
+        $tableID.append(newRow);
+    }
 
-  function onCreateAnswerBtnClick() {
+    function onCreateAnswerBtnClick() {
 
-    let table = document.getElementById("table-answers");
-    let newRowIndex = table.rows.length-1; // last=len-2, because we have tfoot
+        let table = document.getElementById("table-answers");
+        let newRowIndex = table.rows.length - 1; // last=len-2, because we have tfoot
 
-    addRowAnswer($('#table-answers'), newRowIndex, '')
-  }
+        addRowAnswer($('#table-answers'), newRowIndex, '')
+    }
 
 
+    // adding for courses table and tests table - they have similar structure
+    function addRow($tableID, name = 'Пример') {
+        let newRow = $("<tr data-name='" + name + "'>");
+        let cols = "";
+        // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
 
-  // adding for courses table and tests table - they have similar structure
-  function addRow($tableID, name='Пример') {
-    let newRow = $("<tr data-name='"+name+"'>");
-    let cols = "";
-    // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+        cols += '<td style="text-align:center">' + name + '</td>';
 
-    cols += '<td style="text-align:center">'+name+'</td>';
-
-    cols += '<td style="text-align:center">\n' +
+        cols += '<td style="text-align:center">\n' +
             '   <span>\n' +
             '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
             '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
             '   </span>\n' +
             '</td>';
-    cols += '</tr>'
-    newRow.append(cols);
+        cols += '</tr>'
+        newRow.append(cols);
 
-    $tableID.append(newRow);
-  }
-
-  $('.table').on('click', '.row-remove', function () {
-    if (confirm('Вы уверены, что хотите удалить?')) {
-      $(this).parents('tr').detach();
+        $tableID.append(newRow);
     }
-  });
 
+    $('.table').on('click', '.row-remove', function () {
+        if (confirm('Вы уверены, что хотите удалить?')) {
+            $(this).parents('tr').detach();
+        }
+    });
+
+    //----------------------------------------------------------------------------------------
+
+    function fillAllCoursesListTable() {
+        let allCoursesListTable = $("#all-courses-table-list");
+        allCoursesListTable.empty();
+
+        questions.forEach((value, index) => {
+            let newRow = $("<tr id='" + value.courseId + "'>");
+            let cols = "";
+            // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+
+            cols += '<td style="text-align:center">' + value.courseName + '</td>';
+            cols += '<td style="text-align:center">\n' +
+                '   <span>\n' +
+                '      <a role="button" class="btn row-edit btn-outline-default" onclick="viewCoursePage(' + value.courseId + ')">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
+                '      <a role="button" class="btn row-remove btn-outline-danger" onclick="deleteCourse(' + value.courseId + ');">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+                '   </span>\n' +
+                '</td>';
+            cols += '</tr>';
+
+            newRow.append(cols);
+            allCoursesListTable.append(newRow);
+        });
+
+        togglePage("ALL_COURSES_PAGE");
+    }
+
+    function viewCoursePage(courseIdObject) {
+        let courseId = courseIdObject.attributes[0].value;
+        let course = getCourseById(courseId);
+        if (course === undefined) {
+            console.log("getCourseById(courseId.attributes[0].value) returns undefined");
+            fillAllCoursesListTable();
+            togglePage("ALL_COURSES_PAGE");
+        } else {
+            let courseName = $('#course-name-input').attr("value", course.courseName);
+            let testsTable = $('#table-tests');
+            testsTable.empty();
+
+            course.tests.forEach((value, index) => {
+                let newRow = $("<tr id='" + value.testId + "'>");
+                let cols = "";
+
+                // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+                cols += '<td style="text-align:center">' + value.testName + '</td>';
+                cols += '<td style="text-align:center">\n' +
+                    '   <span>\n' +
+                    '      <a role="button" class="btn row-edit btn-outline-default" onclick="viewTestPage(' + courseId + ',' + value.testId + ')">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
+                    '      <a role="button" class="btn row-remove btn-outline-danger" onclick="deleteTest(' + courseId + ',' + value.testId + ');">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+                    '   </span>\n' +
+                    '</td>';
+                cols += '</tr>';
+
+                newRow.append(cols);
+                testsTable.append(newRow);
+            });
+
+            togglePage("COURSE_PAGE");
+        }
+    }
+
+    function viewTestPage(courseIdObject, testIdObject) {
+        let courseId = courseIdObject.attributes[0].value;
+        let testId = testIdObject.attributes[0].value;
+        let course = getCourseById(courseId);
+        let test = getTestByTestId(course, testId);
+
+        if (course === undefined || test === undefined) {
+            console.log("getCourseById(courseId.attributes[0].value) or getTestByTestId(course, testId) returns undefined");
+            fillAllCoursesListTable();
+            togglePage("ALL_COURSES_PAGE");
+        } else {
+            let courseName = $('#course-name-field').attr("value", course.courseName);
+            let testName = $('#test-name-input').attr("value", test.testName);
+            let questionsTable = $('#table-questions');
+            questionsTable.empty();
+
+            test.questions.forEach((value, index) => {
+                let newRow = $("<tr id='" + value.questionId + "'>");
+                let cols = "";
+
+                // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+                cols += '<td style="text-align:center">' + value.questionName + '</td>';
+                cols += '<td style="text-align:center">' + value.cost + '</td>';
+                cols += '<td style="text-align:center">\n' +
+                    '   <span>\n' +
+                    '      <a role="button" class="btn row-edit btn-outline-default" onclick="viewQuestionPage(' + courseId + ',' + testId + ',' + value.questionId + ')">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
+                    '      <a role="button" class="btn row-remove btn-outline-danger" onclick="deleteQuestion(' + courseId + ',' + testId + ',' + value.questionId + ');">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+                    '   </span>\n' +
+                    '</td>';
+                cols += '</tr>';
+
+                newRow.append(cols);
+                questionsTable.append(newRow);
+            });
+
+            togglePage("TEST_PAGE");
+        }
+    }
+
+    function viewQuestionPage(courseIdObject, testIdObject, questionIdObject) {
+        let courseId = courseIdObject.attributes[0].value;
+        let testId = testIdObject.attributes[0].value;
+        let questionId = questionIdObject.attributes[0].value;
+        let course = getCourseById(courseId);
+        let test = getTestByTestId(course, testId);
+        let question = getQuestionByQuestionId(test, questionId);
+
+        if (course === undefined || test === undefined || question === undefined) {
+            console.log("getCourseById(courseId.attributes[0].value) or getTestByTestId(course, testId) or getQuestionByQuestionId(test, questionId) returns undefined");
+            fillAllCoursesListTable();
+            togglePage("ALL_COURSES_PAGE");
+        } else {
+            let questionName = $('#question-name-input').attr("value", question.questionName);
+            let cost = $('#mark-input').attr("value", question.cost);
+            let answersTable = $('#table-answers');
+            let footerTable = $('#table-questions-footer');
+            answersTable.empty();
+            footerTable.empty();
+
+            question.answers.forEach((value, index) => {
+                let newRow = $("<tr>");
+                let cols = "";
+
+                cols += '<tr>\n' +
+                    '    <td style="text-align:center" class="question">\n' +
+                    '        <div class="input-group mb-3 question">\n' +
+                    '        <div class="input-group-prepend">\n' +
+                    '        <span id="answer-number" class="input-group-text">'+index+') </span>\n' +
+                    '    </div>\n' +
+                    '    <input class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="'+value+'">\n' +
+                    '        </div>\n' +
+                    '        </td>\n' +
+                    '\n' +
+                    '        <td style="width:1px; white-space:nowrap;">\n' +
+                    '        <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i\n' +
+                    '    class="fas fas fa-minus-circle pl-1"></i></a>\n' +
+                    '    </td>\n' +
+                    '    </tr>';
+
+                newRow.append(cols);
+                answersTable.append(newRow);
+            });
+
+            //todo: add new temp answer here
+            let footer = $('<tr>\n' +
+                '            <th class="th-sm"><p>\n' +
+                '                <a role="button" class="btn btn-outline-dark-green btn-sm" onclick="onCreateAnswerBtnClick()"><i\n' +
+                '        class="fas fa-plus pl-1"></i></a><br><br>\n' +
+                '            </p></th>\n' +
+                '            <th class="th-sm"></th>\n' +
+                '          </tr>');
+
+            footerTable.append(footer);
+
+            togglePage("QUESTION_PAGE");
+        }
+    }
+
+    function getCourseById(courseId) {
+        let course = undefined;
+        questions.forEach((value, index) => {
+            if (value.courseId === courseId) {
+                course = value;
+            }
+        });
+
+        return course
+    }
+
+    function getTestByTestId(course, testId) {
+        let test = undefined;
+        if (course === undefined) {
+            return undefined
+        }
+
+        course.tests.forEach((value, index) => {
+            if (value.testId === testId) {
+                test = value
+            }
+        });
+
+        return test
+    }
+
+    function getQuestionByQuestionId(test, questionId) {
+        let question = undefined;
+        if (test === undefined) {
+            return undefined
+        }
+
+        test.questions.forEach((value, index) => {
+            if (value.questionId === questionId) {
+                question = value
+            }
+        });
+
+        return question
+    }
+
+    function togglePage(page) {
+        if (page === "ALL_COURSES_PAGE") {
+            $("#edit_course").hide();
+            $("#edit_test").hide();
+            $("#edit_question").hide();
+            $("#main").show();
+
+            return
+        }
+
+        if (page === "COURSE_PAGE") {
+            $("#edit_test").hide();
+            $("#edit_question").hide();
+            $("#main").hide();
+            $("#edit_course").show();
+
+            return
+        }
+
+        if (page === "TEST_PAGE") {
+            $("#edit_course").hide();
+            $("#edit_question").hide();
+            $("#main").hide();
+            $("#edit_test").show();
+
+            return
+        }
+
+        if (page === "QUESTION_PAGE") {
+            $("#edit_course").hide();
+            $("#edit_test").hide();
+            $("#main").hide();
+            $("#edit_question").show();
+
+            return
+        }
+    }
+
+    // Call for initial all courses fill todo: remove!
+    fillAllCoursesListTable();
+
+
+    // INIT SPA
+    togglePage("ALL_COURSES_PAGE");
 
 </script>
