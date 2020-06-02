@@ -42,9 +42,13 @@
     <h1>Список курсов</h1>
     <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i
         class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i
-        class="fas fa-desktop pl-1"></i></a>
-    <a role="button" class="btn btn-outline-indigo" onclick="onSaveBtnClick()">Сохранить<i class="fas fa-save pl-1"></i></a>
+
+    <a role="button" class="btn btn-outline-orange" id="loader-button" onclick="$('#loader-input').trigger('click')">Загрузить<i
+        class="fas fa-save pl-1"></i></a>
+    <input id="loader-input" type="file" style="display:none" onchange="loadGlobalCoursesFromFile(this.files)">
+
+    <a role="button" class="btn btn-outline-indigo" id="saver-button" onclick="saveGlobalCoursesToFile(event)">Сохранить<i
+        class="fas fa-save pl-1"></i></a>
   </div>
 
   <br>
@@ -184,176 +188,41 @@
 </html>
 
 <script>
-    let globalCourses = [
-        {
-            "courseName": "Математич процессы",
-            "courseId": "course1",
-            "tests": [
-                {
-                    "testName": "testNo1",
-                    "testId": "test1",
-                    "questions": [
-                        {
-                            "questionId": "question1",
-                            "questionName": "How are you?",
-                            "cost": 10,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                        {
-                            "questionId": "question2",
-                            "questionName": "How qweqweqwe you?",
-                            "cost": 11,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                        {
-                            "questionId": "question3",
-                            "questionName": "QQyou?",
-                            "cost": 100,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                    ]
-                },
-                {
-                    "testName": "testNo2",
-                    "testId": "test2",
-                    "questions": [
-                        {
-                            "questionId": "question2",
-                            "questionName": "How are qweqwe?",
-                            "cost": 5,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                    ]
+
+    function loadGlobalCoursesFromFile(files) {
+        if (files.length > 0) {
+            let reader = new FileReader();
+            reader.readAsText(files[0], "UTF-8");
+            reader.onload = function (evt) {
+                let raw = b64DecodeUnicode(evt.target.result).split("").reverse().join("");
+                let obj = JSON.parse(raw);
+
+                if (obj !== undefined) {
+                    globalCourses = obj;
+                    currentCourseIndex = -1;
+                    currentTestIndex = -1;
+                    currentQuestionIndex = -1;
+
+                    fillAllCoursesListTable();
+                } else {
+                    alert("Ошибка формата входного файла")
                 }
-            ]
-        },
-        {
-            "courseName": "Физические процессы",
-            "courseId": "course2",
-            "tests": [
-                {
-                    "testName": "testNo3",
-                    "testId": "test1",
-                    "questions": [
-                        {
-                            "questionId": "question3",
-                            "questionName": "ЦРФФФЕ",
-                            "cost": 10,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                    ]
-                },
-                {
-                    "testName": "testNo2",
-                    "testId": "test2",
-                    "questions": [
-                        {
-                            "questionId": "question4",
-                            "questionName": "Hoуауаукпму",
-                            "cost": 5,
-                            "answers": [
-                                {
-                                    "answerId": "answer1",
-                                    "answerName": "qwe",
-                                    "right": true,
-                                },
-                                {
-                                    "answerId": "answer2",
-                                    "answerName": "rty",
-                                    "right": false,
-                                },
-                                {
-                                    "answerId": "answer3",
-                                    "answerName": "asd",
-                                    "right": false,
-                                },
-                            ]
-                        },
-                    ]
-                }
-            ]
+            };
+            reader.onerror = function (evt) {
+                alert("Ошибка чтения входного файла")
+            };
         }
-    ];
+    }
+
+    function saveGlobalCoursesToFile(e) {
+        let jsonStr = JSON.stringify(globalCourses).split("").reverse().join("");
+        let blob = new Blob([b64EncodeUnicode(jsonStr)], {type: 'text/plain'});
+        let link = $('#saver-button');
+        link.attr('download', 'courses.txt');
+        link.attr('href', URL.createObjectURL(blob));
+    }
+
+    let globalCourses = [];
 
     let currentCourseIndex = -1;
     let currentTestIndex = -1;
@@ -829,6 +698,19 @@
         }
 
         return undefined
+    }
+
+    function b64EncodeUnicode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+                return String.fromCharCode('0x' + p1);
+            }));
+    }
+
+    function b64DecodeUnicode(str) {
+        return decodeURIComponent(atob(str).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
     }
 
     function togglePage(page) {
