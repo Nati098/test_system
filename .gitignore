@@ -1,0 +1,7 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Local configuration file (sdk path, etc)
+node_modules/
+
