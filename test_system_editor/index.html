@@ -40,7 +40,7 @@
 <div id="main">
   <div style="margin-left: 8px; margin-top: 8px">
     <h1>Список курсов</h1>
-    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateCourseBtnClick()">Добавить новый курс<i
+    <a role="button" class="btn btn-outline-dark-green" onclick="addNewCourse()">Добавить новый курс<i
         class="fas fa-plus-square pl-1"></i></a>
 
     <a role="button" class="btn btn-outline-orange" id="loader-button" onclick="$('#loader-input').trigger('click')">Загрузить<i
@@ -75,16 +75,14 @@
         <span id="inputGroup-sizing-default" class="input-group-text">Название курса: </span>
       </div>
       <input id='course-name-input' class="form-control" type="text" aria-label="Default"
-             aria-describedby="inputGroup-sizing-default">
+             aria-describedby="inputGroup-sizing-default" onchange="updateCourseName(this)">
     </div>
 
     <p>Тесты:</p>
 
-    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateTestBtnClick()">Добавить новый тест<i
+    <a role="button" class="btn btn-outline-dark-green" onclick="addNewTest()">Добавить новый тест<i
         class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-indigo" onclick="onSaveCourseBtnClick()">Сохранить<i
-        class="fas fa-save pl-1"></i></a>
-    <a role="button" onclick="togglePage('ALL_COURSES_PAGE')" class="btn btn-outline-orange">Назад<i
+    <a role="button" onclick="viewAllCoursesListTable()" class="btn btn-outline-orange">Назад<i
         class="fas fa-backward pl-1"></i></a>
   </div>
 
@@ -117,14 +115,12 @@
         <span id="nameSection" class="input-group-text">Название теста: </span>
       </div>
       <input id="test-name-input" class="form-control" type="text" aria-label="Default"
-             aria-describedby="inputGroup-sizing-default">
+             aria-describedby="inputGroup-sizing-default" onchange="updateTestName(this)">
     </div>
 
-    <a role="button" class="btn btn-outline-dark-green" onclick="onCreateQuestionBtnClick()">Добавить вопрос<i
+    <a role="button" class="btn btn-outline-dark-green" onclick="addNewQuestion()">Добавить вопрос<i
         class="fas fa-plus-square pl-1"></i></a>
-    <a role="button" class="btn btn-outline-indigo" onclick="onSaveTestBtnClick()">Сохранить<i
-        class="fas fa-save pl-1"></i></a>
-    <a role="button" onclick="togglePage('COURSE_PAGE')" class="btn btn-outline-orange">Назад<i
+    <a role="button" onclick="viewCoursePage()" class="btn btn-outline-orange">Назад<i
         class="fas fa-backward pl-1"></i></a>
   </div>
 
@@ -150,15 +146,14 @@
       <span class="input-group-text" id="nameQuestion">Вопрос: </span>
     </div>
     <input id="question-name-input" class="form-control" type="text" aria-label="Default"
-           aria-describedby="inputGroup-sizing-default">
+           aria-describedby="inputGroup-sizing-default" onchange="updateQuestionName(this)">
   </div>
   <div class="input-group mb-3 form-group w-25">
     <div class="input-group-prepend">
       <span class="input-group-text" id="mark">Балл за правильный ответ </span>
       <input id="mark-input" class="form-control" type="text" aria-label="Default"
-             aria-describedby="inputGroup-sizing-default">
+             aria-describedby="inputGroup-sizing-default" onchange="updateQuestionMark(this)">
     </div>
-
   </div>
 
   <table class="table-responsive-md">
@@ -173,15 +168,13 @@
       <!--  FILL ALL ANSWERS LIST HERE-->
       </tbody>
       <tfoot id="table-questions-footer">
-
+      <!--  FILL FOOTER BUTTONS HERE-->
       </tfoot>
     </table>
   </table>
 
-  <a role="button" onclick="{$('#edit_test').toggle(); $('#edit_question').toggle();}" class="btn btn-outline-indigo">Назад<i
+  <a role="button" onclick="viewTestPage()" class="btn btn-outline-orange">Назад<i
       class="fas fa-backward pl-1"></i></a>
-  <a role="button" onclick="onSaveQuestionBtnClick()" class="btn btn-outline-indigo">Сохранить<i
-      class="fas fa-save pl-1"></i></a>
 </div>
 
 </body>
@@ -203,7 +196,7 @@
                     currentTestIndex = -1;
                     currentQuestionIndex = -1;
 
-                    fillAllCoursesListTable();
+                    viewAllCoursesListTable();
                 } else {
                     alert("Ошибка формата входного файла")
                 }
@@ -218,7 +211,7 @@
         let jsonStr = JSON.stringify(globalCourses).split("").reverse().join("");
         let blob = new Blob([b64EncodeUnicode(jsonStr)], {type: 'text/plain'});
         let link = $('#saver-button');
-        link.attr('download', 'courses.txt');
+        link.attr('download', 'courses');
         link.attr('href', URL.createObjectURL(blob));
     }
 
@@ -228,253 +221,7 @@
     let currentTestIndex = -1;
     let currentQuestionIndex = -1;
 
-    // let isCourseInEditMode = false;
-    // let rowCourseBuffer = null;
-    // let isTestInEditMode = false;
-    // let rowTestBuffer = null;
-    // let isQuestionInEditMode = false;
-    // let rowQuestionBuffer = null;
-    //
-    //
-    // function onCreateCourseBtnClick() {
-    //     $('#course-name-input').val('');
-    //
-    //     $("#main").hide();
-    //     $("#edit_course").show();
-    //     $("#edit_test").hide();
-    //     $("#edit_question").hide();
-    // }
-    //
-    // function onLoadBtnClick() {
-    //     // TODO load btn
-    //     alert('Load!');
-    // }
-    //
-    // function onSaveBtnClick() {
-    //     //TODO: serialize all
-    //
-    //
-    //     // TODO save btn
-    //     alert('Save!');
-    // }
-    //
-    //
-    // function onSaveCourseBtnClick() {
-    //     if ($('#course-name-input').val() === "") {
-    //         alert('Не заполнено поле с названием курса! Проверьте и повторите попытку.');
-    //         return;
-    //     }
-    //
-    //     if (isCourseInEditMode) {
-    //         // TODO: edit mode: перезапись записи
-    //         alert('Edit course mode');
-    //
-    //         if (!rowCourseBuffer) {
-    //             alert('Что-то пошло не так! Course Buffer is null!');
-    //             return;
-    //         }
-    //
-    //         alert(rowCourseBuffer.attr('data-name'));
-    //
-    //         rowCourseBuffer.attr('data-name', $('#course-name-input').val());
-    //
-    //         isCourseInEditMode = false;
-    //         // rowCourseBuffer = null;
-    //     } else {
-    //         addRow($('#table-courses'), $('#course-name-input').val())
-    //     }
-    //
-    //     $("#main").toggle();
-    //     $("#edit_course").toggle();
-    //     alert(rowCourseBuffer.attr('data-name'));
-    // }
-    //
-    // function onCreateTestBtnClick() {
-    //     $('#course-name-field').val($('#course-name-input').val());
-    //     $('#test-name-input').val('');
-    //
-    //     $("#main").hide();
-    //     $("#edit_course").hide();
-    //     $("#edit_test").show();
-    //     $("#edit_question").hide();
-    // }
-    //
-    // $('#table-tests').on('click', '.row-edit', function () {
-    //     isTestInEditMode = true;
-    //     rowTestBuffer = $(this).parents("tr");
-    //
-    //     let name = $(this).parents("tr").attr('data-name');
-    //
-    //     onCreateTestBtnClick();
-    //
-    //     $('#test-name-input').val(name);
-    //     // TODO:добавить заполнение таблицы с вопросами этого теста
-    // });
-    //
-    // function onSaveTestBtnClick() {
-    //     if ($('#test-name-input').val() === "") {
-    //         alert('Не заполнено поле с названием теста! Проверьте и повторите попытку.');
-    //         return;
-    //     }
-    //
-    //     if (isTestInEditMode) {
-    //         // TODO: edit mode: перезапись записи
-    //         alert('Edit test mode');
-    //
-    //         if (!rowTestBuffer) {
-    //             alert('Что-то пошло не так! Test Buffer is null!');
-    //             return;
-    //         }
-    //         rowTestBuffer.attr('data-name', $('#test-name-input').val());
-    //
-    //         isTestInEditMode = false;
-    //         rowTestBuffer = null;
-    //     } else {
-    //         addRow($('#table-tests'), $('#test-name-input').val());
-    //     }
-    //
-    //     $("#edit_course").toggle();
-    //     $("#edit_test").toggle();
-    // }
-    //
-    // function onCreateQuestionBtnClick() {
-    //     $('#question-name-input').val('');
-    //     $('#mark-input').val('');
-    //     $('#table-answers tbody').empty();
-    //
-    //     $("#main").hide();
-    //     $("#edit_course").hide();
-    //     $("#edit_test").hide();
-    //     $("#edit_question").show();
-    // }
-    //
-    // $('#table-questions').on('click', '.row-edit', function () {
-    //     isQuestionInEditMode = true;
-    //     rowQuestionBuffer = $(this).parents("tr");
-    //
-    //     onCreateQuestionBtnClick();
-    //
-    //     let body = $(this).parents("tr").attr('data-body');
-    //     let mark = $(this).parents("tr").attr('data-mark');
-    //
-    //     $('#question-name-input').val(body);
-    //     $('#mark-input').val(mark);
-    //
-    //     // TODO: добавить заполнение таблицы с ответами
-    //
-    // });
-    //
-    // function addRowQuestion($tableID, body = 'Пример', mark = '1') {
-    //     let newRow = $('<tr data-body=' + body + ' data-mark=' + mark + '>');
-    //     let cols = "";
-    //
-    //     cols += '<td style="text-align:center">' + body + '</td>';
-    //     cols += '<td style="text-align:center">' + mark + '</td>';
-    //
-    //     cols += '<td style="text-align:center">\n' +
-    //         '   <span>\n' +
-    //         '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
-    //         '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
-    //         '   </span>\n' +
-    //         '</td>';
-    //     cols += '</tr>';
-    //     newRow.append(cols);
-    //
-    //     $tableID.append(newRow);
-    // }
-    //
-    // function onSaveQuestionBtnClick() {
-    //     let body = $('#question-name-input').val();
-    //     let mark = $('#mark-input').val();
-    //     if (body === "" || mark === "") {
-    //         alert('Не заполнено поле с содержанием вопроса или балла за вопрос! Проверьте эти поля и повторите попытку.');
-    //         return;
-    //     }
-    //
-    //     // questions
-    //     console.log(document.getElementsByClassName('answer1'));
-    //     if (isQuestionInEditMode) {
-    //         // alert('Edit qstn mode');
-    //
-    //         if (!rowQuestionBuffer) {
-    //             alert('Что-то пошло не так! Qstn Buffer is null!');
-    //             return;
-    //         }
-    //         // TODO: edit mode: перезапись записи
-    //         rowQuestionBuffer.attr('data-body', $('#question-name-input').val());
-    //         rowQuestionBuffer.attr('data-mark', $('#mark-input').val());
-    //
-    //         isQuestionInEditMode = false;
-    //         rowQuestionBuffer = null;
-    //     } else {
-    //         addRowQuestion($('#table-questions'), body, mark);
-    //     }
-    //
-    //     $("#edit_test").toggle();
-    //     $("#edit_question").toggle();
-    // }
-    //
-    // function addRowAnswer($tableID, id = 1, name = 'Пример') {
-    //     let newRow = $("<tr>");
-    //     let cols = "";
-    //
-    //     cols += '<td style="text-align:center" class="question">\n' +
-    //         '   <div class="input-group mb-3 question">\n' +
-    //         '       <div class="input-group-prepend">\n' +
-    //         '            <span class="input-group-text">' + id + ') </span>\n' +
-    //         '  </div>\n' +
-    //         '       <input class="answer1" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default">\n' +
-    //         '  </div>\n' +
-    //         '</td>';
-    //
-    //     cols += '<td style="width:1px; white-space:nowrap;">\n' +
-    //         '    <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
-    //         '</td>';
-    //     cols += '</tr>'
-    //     newRow.append(cols);
-    //
-    //     //if it doesn't work, use: $tableID.find('tbody tr:last').after(newRow);
-    //     $tableID.append(newRow);
-    // }
-    //
-    // function onCreateAnswerBtnClick() {
-    //
-    //     let table = document.getElementById("table-answers");
-    //     let newRowIndex = table.rows.length - 1; // last=len-2, because we have tfoot
-    //
-    //     addRowAnswer($('#table-answers'), newRowIndex, '')
-    // }
-    //
-    //
-    // // adding for courses table and tests table - they have similar structure
-    // function addRow($tableID, name = 'Пример') {
-    //     let newRow = $("<tr data-name='" + name + "'>");
-    //     let cols = "";
-    //     // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
-    //
-    //     cols += '<td style="text-align:center">' + name + '</td>';
-    //
-    //     cols += '<td style="text-align:center">\n' +
-    //         '   <span>\n' +
-    //         '      <a role="button" class="btn row-edit btn-outline-default">Изменить<i class="fas fa-edit pl-1"></i></a>\n' +
-    //         '      <a role="button" class="btn row-remove btn-outline-danger">Удалить<i class="fas fas fa-minus-circle pl-1"></i></a>\n' +
-    //         '   </span>\n' +
-    //         '</td>';
-    //     cols += '</tr>'
-    //     newRow.append(cols);
-    //
-    //     $tableID.append(newRow);
-    // }
-    //
-    // $('.table').on('click', '.row-remove', function () {
-    //     if (confirm('Вы уверены, что хотите удалить?')) {
-    //         $(this).parents('tr').detach();
-    //     }
-    // });
-
-    //----------------------------------------------------------------------------------------
-
-    function fillAllCoursesListTable() {
+    function viewAllCoursesListTable() {
         let allCoursesListTable = $("#all-courses-table-list");
         allCoursesListTable.empty();
 
@@ -500,10 +247,11 @@
     }
 
     function viewCoursePage(courseIndex) {
+        courseIndex = courseIndex > -1 ? courseIndex : currentCourseIndex;
         let course = getCourseByIndex(courseIndex);
         if (course === undefined) {
             console.log("getCourseByIndex(courseIndex) returns undefined");
-            fillAllCoursesListTable();
+            viewAllCoursesListTable();
             togglePage("ALL_COURSES_PAGE");
             return
         }
@@ -536,10 +284,11 @@
     }
 
     function viewTestPage(testIndex) {
+        testIndex = testIndex > -1 ? testIndex : currentTestIndex;
         let course = getCourseByIndex(currentCourseIndex);
         if (course === undefined) {
             console.log("getCourseByIndex(courseIndex) returns undefined in viewTestPage");
-            fillAllCoursesListTable();
+            viewAllCoursesListTable();
             togglePage("ALL_COURSES_PAGE");
             return
         }
@@ -547,7 +296,7 @@
         let test = getTestByIndex(testIndex);
         if (test === undefined) {
             console.log("getTestByIndex(testIndex) returns undefined in viewTestPage");
-            fillAllCoursesListTable();
+            viewAllCoursesListTable();
             togglePage("ALL_COURSES_PAGE");
             return
         }
@@ -582,10 +331,11 @@
     }
 
     function viewQuestionPage(questionIndex) {
+        questionIndex = questionIndex > -1 ? questionIndex : currentQuestionIndex;
         let question = getQuestionByIndex(questionIndex);
         if (question === undefined) {
             console.log("getQuestionByIndex(questionIndex) returns undefined in viewQuestionPage");
-            fillAllCoursesListTable();
+            viewAllCoursesListTable();
             togglePage("ALL_COURSES_PAGE");
             return
         }
@@ -608,13 +358,13 @@
                 '        <div class="input-group mb-3 question">\n' +
                 '        <div class="input-group-prepend">\n' +
                 '        <span id="answer-number" class="input-group-text">' + index + ') </span>\n' +
-                '    </div>\n' +
-                '    <input class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="' + value.answerName + '">\n' +
+                '        </div>\n' +
+                '        <input class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" onchange="updateAnswerName(this,' + index + ')" value="' + value.answerName + '">\n' +
                 '        </div>\n' +
                 '        </td>\n' +
                 '\n' +
                 '        <td style="white-space:nowrap;">\n' +
-                '        <a role="button" class="btn row-remove btn-outline-danger btn-sm">Удалить<i\n' +
+                '        <a role="button" class="btn row-remove btn-outline-danger btn-sm" onclick="deleteAnswer(' + index + ')">Удалить<i\n' +
                 '    class="fas fas fa-minus-circle pl-1"></i></a>\n' +
                 '    </td>\n' +
                 '    </tr>';
@@ -623,10 +373,9 @@
             answersTable.append(newRow);
         });
 
-        //todo: add new temp answer here
         let footer = $('<tr>\n' +
             '            <th class="th-sm"><p>\n' +
-            '                <a role="button" class="btn btn-outline-dark-green btn-sm" onclick="onCreateAnswerBtnClick()">Добавить<i\n' +
+            '                <a role="button" class="btn btn-outline-dark-green btn-sm" onclick="addNewAnswer()">Добавить<i\n' +
             '        class="fas fa-plus pl-1"></i></a><br><br>\n' +
             '            </p></th>\n' +
             '            <th class="th-sm"></th>\n' +
@@ -637,13 +386,74 @@
         togglePage("QUESTION_PAGE");
     }
 
+    function addNewCourse() {
+        globalCourses.push({
+            "courseName": "",
+            "courseId": Math.random().toString(36).substring(10),
+            "tests": [],
+        });
+
+        viewCoursePage(globalCourses.length - 1)
+    }
+
+    function addNewTest() {
+        globalCourses[currentCourseIndex].tests.push({
+            "testName": "",
+            "testId": Math.random().toString(36).substring(10),
+            "questions": [],
+        });
+
+        viewTestPage(globalCourses[currentCourseIndex].tests.length - 1)
+    }
+
+    function addNewQuestion() {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions.push({
+            "questionName": "",
+            "questionId": Math.random().toString(36).substring(10),
+            "cost": 0,
+            "answers": [],
+        });
+
+        viewQuestionPage(globalCourses[currentCourseIndex].tests[currentTestIndex].questions.length - 1)
+    }
+
+    function addNewAnswer() {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers.push({
+            "answerId": Math.random().toString(36).substring(10),
+            "answerName": "",
+            "right": false,
+        });
+
+        viewQuestionPage(currentQuestionIndex)
+    }
+
+    function updateCourseName(e) {
+        globalCourses[currentCourseIndex].courseName = e.value
+    }
+
+    function updateTestName(e) {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].testName = e.value
+    }
+
+    function updateQuestionName(e) {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].questionName = e.value
+    }
+
+    function updateQuestionMark(e) {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].cost = parseInt(e.value)
+    }
+
+    function updateAnswerName(e, answerIndex) {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers[answerIndex].answerName = e.value
+    }
+
     function deleteCourse(courseIndex) {
         if (courseIndex > -1 && courseIndex < globalCourses.length) {
             globalCourses.splice(courseIndex, 1);
             currentCourseIndex = -1;
         }
 
-        fillAllCoursesListTable();
+        viewAllCoursesListTable();
     }
 
     function deleteTest(testIndex) {
@@ -668,6 +478,20 @@
         }
 
         viewTestPage(currentTestIndex);
+    }
+
+    function deleteAnswer(answerIndex) {
+        if (currentCourseIndex > -1 && currentCourseIndex < globalCourses.length) {
+            if (currentTestIndex > -1 && currentTestIndex < globalCourses[currentCourseIndex].tests.length) {
+                if (currentQuestionIndex > -1 && currentQuestionIndex < globalCourses[currentCourseIndex].tests[currentTestIndex].questions.length) {
+                    if (answerIndex > -1 && answerIndex < globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers.length) {
+                        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers.splice(answerIndex, 1);
+                    }
+                }
+            }
+        }
+
+        viewQuestionPage(currentQuestionIndex);
     }
 
     function getCourseByIndex(courseIndex) {
@@ -751,11 +575,7 @@
         }
     }
 
-    // Call for initial all courses fill todo: remove!
-    fillAllCoursesListTable();
-
-
     // INIT SPA
-    togglePage("ALL_COURSES_PAGE");
+    viewAllCoursesListTable();
 
 </script>
