@@ -27,12 +27,6 @@
           integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
           crossorigin="anonymous"></script>
 
-  <!--  <script>-->
-  <!--    delete module.exports-->
-  <!--  </script>-->
-  <!--  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>-->
-  <!--  <script src="./window.js" charset="utf-8"></script>-->
-
 </head>
 
 <body>
@@ -360,7 +354,13 @@
                 '        <span id="answer-number" class="input-group-text">' + (index+1) + ') </span>\n' +
                 '        </div>\n' +
                 '        <input class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" onchange="updateAnswerName(this,' + index + ')" value="' + value.answerName + '">\n' +
-                '        </div>\n' +
+                '        </div>' +
+                '        <div class="form-check">\n' +
+                '        <input class="form-check-input" type="checkbox" value="" id="defaultCheck'+index+'">\n' +
+                '        <label class="form-check-label" for="defaultCheck'+index+'">\n' +
+                '             Правильный ответ\n' +
+                '        </label>\n' +
+                '        </div>'+
                 '        </td>\n' +
                 '\n' +
                 '        <td style="white-space:nowrap;">\n' +
