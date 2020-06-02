@@ -20,6 +20,8 @@
 
   </head>
   <body>
+
+    <!-- Main page -->
     <div id="main" class="wrapper-editor">
 
       <h4>Добро пожаловать!</h4>
@@ -27,34 +29,28 @@
       <a role="button" class="btn btn-outline-orange" onclick="onLoadBtnClick()">Загрузить<i class="fas fa-desktop pl-1"></i></a>
       <p> </p>
 
-      <table id="table-tests" class="table table-striped table-bordered" cellspacing="0" width="100%">
+      <table class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
         <tr>
 
-<!--          <th class="th-sm" style="size: 20px; text-align: center"><b>#</b></th>-->
+          <th class="th-sm" style="size: 20px; text-align: center"><b>#</b></th>
           <th class="th-sm" style="size: 20px; text-align: center"><b>Курс</b></th>
           <th class="th-sm" style="size: 20px; text-align: center"><b>Тест</b></th>
 
         </tr>
         </thead>
-        <tbody>
-        <tr data-course="C1" data-test="Test1">
-<!--          <th scope="row" style="text-align: center">1</th>-->
-          <td style="text-align:center">C1</td>
-          <td style="text-align:center">Test1</td>
-          <td style="text-align:center">
-              <a role="button" class="btn row-run btn-outline-indigo btn-sm m-0">Пройти тест</a>
-          </td>
-
-        </tr>
-
+        <tbody  id="all-courses-table-list">
+        <!-- List of tests -->
         </tbody>
 
       </table>
 
     </div>
 
+    <!-- Test page -->
     <div id="test" style="display: none">
+
+      <a role="button" onclick="togglePage('MAIN_PAGE')" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
 
       <div id="mainInfo" class="table-responsive text-nowrap">
         <table id="questions" class="table table-borderless" cellspacing="0" >
@@ -95,73 +91,11 @@
           </tr>
 
         </table>
+
       </div>
 
       <!--here the list of questions-->
-      <div class="list-group">
-        <div class="list-group-item">
-          <h5 id="questionNumber">Вопрос</h5>
-          <p id="questionBody">Тут что-то написано. Скорее всего, сам вопрос. Возможно, на эльфийском.</p>
-          <div id="answers1">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question1" id="answer11">
-              <label class="form-check-label" for="answer11">
-                Ответ 1
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question1" id="answer12" >
-              <label class="form-check-label" for="answer12">
-                Ответ 2
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question1" id="answer13">
-              <label class="form-check-label" for="answer13">
-                Ответ 3
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question1" id="answer14" >
-              <label class="form-check-label" for="answer14">
-                Ответ 4
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="list-group-item">
-          <h5 class="card-title">Вопрос [2]</h5>
-          <p class="card-text">Тело вопроса, содержание вопроса, дух вопроса, в общем, сам вопрос.</p>
-
-          <div id="answers">
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question2" id="answer1">
-              <label class="form-check-label" for="answer1">
-                Ответ 1
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question2" id="answer2" >
-              <label class="form-check-label" for="answer2">
-                Ответ 2
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question2" id="answer3">
-              <label class="form-check-label" for="answer3">
-                Ответ 3
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="radio" name="question2" id="answer4">
-              <label class="form-check-label" for="answer4">
-                Ответ 4
-              </label>
-            </div>
-          </div>
-
-        </div>
+      <div id="list-questions" class="list-group">
 
       </div>
 
@@ -194,40 +128,307 @@
   </body>
 </html>
 
-<script>
-  let tests = null;
 
+<script>
+  let globalCourses = [
+    {
+      "courseName": "Математич процессы",
+      "courseId": "course1",
+      "tests": [
+        {
+          "testName": "testNo1",
+          "testId": "test1",
+          "questions": [
+            {
+              "questionId": "question1",
+              "questionName": "How are you?",
+              "cost": 10,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+            {
+              "questionId": "question2",
+              "questionName": "How qweqweqwe you?",
+              "cost": 11,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+            {
+              "questionId": "question3",
+              "questionName": "QQyou?",
+              "cost": 100,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          "testName": "testNo2",
+          "testId": "test2",
+          "questions": [
+            {
+              "questionId": "question2",
+              "questionName": "How are qweqwe?",
+              "cost": 5,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+          ]
+        }
+      ]
+    },
+    {
+      "courseName": "Физические процессы",
+      "courseId": "course2",
+      "tests": [
+        {
+          "testName": "testNo3",
+          "testId": "test1",
+          "questions": [
+            {
+              "questionId": "question3",
+              "questionName": "ЦРФФФЕ",
+              "cost": 10,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+          ]
+        },
+        {
+          "testName": "testNo2",
+          "testId": "test2",
+          "questions": [
+            {
+              "questionId": "question4",
+              "questionName": "Hoуауаукпму",
+              "cost": 5,
+              "answers": [
+                {
+                  "answerId": "answer1",
+                  "answerName": "qwe",
+                  "right": true,
+                },
+                {
+                  "answerId": "answer2",
+                  "answerName": "rty",
+                  "right": false,
+                },
+                {
+                  "answerId": "answer3",
+                  "answerName": "asd",
+                  "right": false,
+                },
+              ]
+            },
+          ]
+        }
+      ]
+    }
+  ];
+
+  let currentCourseIndex = -1;
+  let currentTestIndex = -1;
 
   function onLoadBtnClick() {
     // TODO: load btn
+    console.log('Load!');
   }
 
-  $('#table-tests').on('click', '.row-run', function () {
-    let course = $(this).parents("tr").attr("data-course");
-    let test = $(this).parents("tr").attr("data-test");
+  function fillAllCoursesListTable() {
+    let allTestsListTable = $("#all-courses-table-list");
+    allTestsListTable.empty();
 
-    $('#course-name-field').val(course);
-    $('#test-name-field').val(test);
-    fillTest();
+    globalCourses.forEach((value1, index1) => {
+      let i = 1;
 
-    toogleAll();
-  });
+      value1.tests.forEach((value2, index2) => {
+        let index = index1+''+index2;
+        console.log('index='+index);
 
-  function fillTest() {
-    // TODO: fill test
+        let newRow = $('<tr id="' + i + '">');
+        let cols = "";
+        // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+        cols += '<td style="text-align:center">' + value1.courseName + '</td>';
+        cols += '<td style="text-align:center">' + value2.testName + '</td>';
+        cols += '<td style="text-align:center">\n' +
+                '   <span>\n' +
+                '      <a role="button" class="btn row-run btn-outline-indigo btn-sm m-0" onclick="runTest(\'' + index + '\');">Пройти тест</a>\n' +
+                '   </span>\n' +
+                '</td>';
+        cols += '</tr>';
+
+        newRow.append(cols);
+        allTestsListTable.append(newRow);
+        i = i+1;
+      });
+    });
+
+    togglePage("MAIN_PAGE");
+  }
+
+  function runTest(rowIdx) {
+
+    let test = getTest(rowIdx);
+
+    if (test === undefined) {
+      console.log('Wrong test index. Current index: '+rowIdx);
+    }
+
+    fillTest(test);
+    togglePage("TEST_PAGE");
+
+  }
+
+  function getTest(rowIdx) {
+    let courseId = parseInt(rowIdx[0]);
+    let testId = parseInt(rowIdx[1]);
+    console.log('row idx='+rowIdx);
+    console.log('course='+courseId+' tst='+testId);
+
+    if (courseId > -1 && courseId < globalCourses.length) {
+      if (testId > -1 && testId < globalCourses[courseId].tests.length) {
+        currentCourseIndex = courseId;
+        currentTestIndex = testId;
+        console.log(globalCourses[courseId].tests[testId]);
+        return globalCourses[courseId].tests[testId]
+      }
+    }
+    return undefined
+  }
+
+  function fillTest(test) {
+    $('#course-name-field').val(globalCourses[currentCourseIndex].courseName);
+    $('#test-name-field').val(globalCourses[currentCourseIndex].tests[currentTestIndex].testName);
+
+    let questionsList = $('#list-questions');
+    questionsList.empty();
+
+    test.questions.forEach((value1, index1) => {
+      let element = '';
+
+      element += '<div class="list-group-item">';
+      element += '<h5 id="questionNumber">Вопрос '+(index1+1)+'</h5>';
+      element += '<p id="questionName">'+value1.questionName+'</p>';
+      element += '<div id="answers'+index1+'">';
+
+      value1.answers.forEach((value2, index2) => {
+        let index = 'answer'+index1+''+index2;
+        let answer = '';
+
+        answer += '<div class="form-check">';
+        answer += '<input id="'+index+'" name="question'+index1+'" class="form-check-input" type="radio">';
+        answer += '<label class="form-check-label" for="'+index+'">'+value2.answerName+'</label>';
+        answer += '</div>';
+
+        element += answer;
+      });
+
+      element += '</div>';
+      element += '</div>';
+
+      questionsList.append(element);
+    });
+
   }
 
   function backToTests() {
-    $('#course-name-input').val('');
+    $('#course-name-field').val('');
+    $('#test-name-field').val('');
 
-    toogleAll();
+    togglePage("MAIN_PAGE");
   }
 
+  function togglePage(page) {
+    if (page === "MAIN_PAGE") {
+      $('#main').show();
+      $('#test').hide();
+      return;
+    }
 
+    if (page === "TEST_PAGE") {
+      $('#main').hide();
+      $('#test').show();
+      return;
+    }
 
-  function toogleAll() {
-    $("#test").toggle();
-    $("#main").toggle();
   }
+
+  fillAllCoursesListTable();
+  togglePage("MAIN_PAGE");
 
 </script>
