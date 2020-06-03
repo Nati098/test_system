@@ -16,7 +16,7 @@
     <script src="lib/85609d285c.js" crossorigin="anonymous"></script>
     <!-- jQuery, Bootstrap JS -->
     <script src="lib/jquery-3.3.1.slim.min.js"></script>
-<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
+
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
 
@@ -128,8 +128,6 @@
         let raw = b64DecodeUnicode(evt.target.result).split("").reverse().join("");
         let obj = JSON.parse(raw);
 
-        console.log(obj);
-
         if (obj !== undefined) {
           globalCourses = obj;
           currentCourseIndex = -1;
@@ -161,11 +159,10 @@
 
       value1.tests.forEach((value2, index2) => {
         let index = index1+''+index2;
-        console.log('index='+index);
 
         let newRow = $('<tr id="' + i + '">');
         let cols = "";
-        // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
+
         cols += '<td style="text-align:center">' + value1.courseName + '</td>';
         cols += '<td style="text-align:center">' + value2.testName + '</td>';
         cols += '<td style="text-align:center">\n' +
@@ -200,8 +197,6 @@
   function getTestByRow(rowIdx) {
     let courseId = parseInt(rowIdx[0]);
     let testId = parseInt(rowIdx[1]);
-    console.log('row idx='+rowIdx);
-    console.log('course='+courseId+' tst='+testId);
 
     return getTest(courseId, testId);
   }
@@ -211,7 +206,6 @@
       if (testId > -1 && testId < globalCourses[courseId].tests.length) {
         currentCourseIndex = courseId;
         currentTestIndex = testId;
-        // console.log(globalCourses[courseId].tests[testId]);
         return globalCourses[courseId].tests[testId]
       }
     }
@@ -305,26 +299,19 @@
 
         for (let i=0; i < test.questions.length; i++) {
           let rightAnswer = test.questions[i].answers.map((_, i) => i).filter(e => test.questions[i].answers[e].right);
-          console.log('right answer=' + rightAnswer);
-          // console.log(document.querySelectorAll('input[name="answer0"]'));
 
           let ourAnswer = -1;
           let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
           for (let rb of rbs) {
             if (rb.checked) {
-              let ourAnswerId = rb.id;  //answer02
+              let ourAnswerId = rb.id;
               ourAnswer = ourAnswerId.substr(ourAnswerId.length - 1);
-              console.log('our answer=' + ourAnswer);
               break;
             }
           }
 
           res += (rightAnswer == ourAnswer) ? 1 : 0;
         }
-
-        // let r = res+'/'+test.questions.length
-        // console.log(res+'/'+test.questions.length)
-        // console.log(res/test.questions.length)
 
         return (res/test.questions.length*100).toFixed(2);
 

@@ -24,11 +24,6 @@
 
   <!-- jQuery, Bootstrap JS -->
   <script src="lib/jquery-3.3.1.slim.min.js"></script>
-  <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"-->
-  <!--        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"-->
-  <!--        crossorigin="anonymous"></script>-->
-  <!--<script>window.jQuery || document.write('<script src="lib/jquery-3.3.1.slim.min.js">\x3C/script>')</script>-->
-
 
 </head>
 
@@ -53,7 +48,6 @@
   <table id="table-courses" class="table table-bordered table-striped" cellspacing="0" width="100%">
     <thead>
     <tr>
-      <!--      <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
       <th class="th-sm" style="size: 16px; text-align: center"><b>Курс</b></th>
       <th class="th-sm"></th>
     </tr>
@@ -124,7 +118,6 @@
   <table class="table table-bordered table-striped" cellspacing="0" width="100%">
     <thead>
     <tr>
-      <!--        <th class="th-sm" style="size: 16px; text-align: center"><b>#</b></th>-->
       <th class="th-sm" style="size: 16px; text-align: center"><b>Вопрос</b></th>
       <th class="th-sm" style="size: 16px; text-align: center"><b>Оценка</b></th>
       <th class="th-sm"></th>
@@ -225,7 +218,6 @@
         globalCourses.forEach((value, index) => {
             let newRow = $("<tr id='" + value.courseId + "'>");
             let cols = "";
-            // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
 
             cols += '<td style="text-align:center">' + value.courseName + '</td>';
             cols += '<td style="text-align:center">\n' +
@@ -263,7 +255,6 @@
             let newRow = $("<tr id='" + value.testId + "'>");
             let cols = "";
 
-            // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
             cols += '<td style="text-align:center">' + value.testName + '</td>';
             cols += '<td style="text-align:center">\n' +
                 '   <span>\n' +
@@ -309,7 +300,6 @@
             let newRow = $("<tr id='" + value.questionId + "'>");
             let cols = "";
 
-            // cols += '<th scope="row" style="text-align: center">'+$tableID.find('tr').length+'</th>';
             cols += '<td style="text-align:center">' + value.questionName + '</td>';
             cols += '<td style="text-align:center">' + value.cost + '</td>';
             cols += '<td style="text-align:center">\n' +
