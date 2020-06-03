@@ -141,7 +141,7 @@
   <div class="input-group mb-3 form-group w-25">
     <div class="input-group-prepend">
       <span class="input-group-text" id="mark">Балл за правильный ответ </span>
-      <input id="mark-input" class="form-control" type="text" aria-label="Default"
+      <input id="mark-input" class="form-control" type="number" aria-label="Default"
              aria-describedby="inputGroup-sizing-default" onchange="updateQuestionMark(this)">
     </div>
   </div>
@@ -349,10 +349,8 @@
                 '        <input class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" onchange="updateAnswerName(this,' + index + ')" value="' + value.answerName + '">\n' +
                 '        </div>' +
                 '        <div class="form-check">\n' +
-                '        <input class="form-check-input" type="checkbox" value="" id="defaultCheck'+index+'">\n' +
-                '        <label class="form-check-label" for="defaultCheck'+index+'">\n' +
-                '             Правильный ответ\n' +
-                '        </label>\n' +
+                '        <input class="form-check-input" type="checkbox" onchange="updateAnswerResult(this,' + index + ')" value="" '+(value.right ? "checked": "")+'>\n' +
+                '        <label class="form-check-label">Правильный ответ</label>\n' +
                 '        </div>'+
                 '        </td>\n' +
                 '\n' +
@@ -438,6 +436,10 @@
 
     function updateAnswerName(e, answerIndex) {
         globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers[answerIndex].answerName = e.value
+    }
+
+    function updateAnswerResult(e, answerIndex) {
+        globalCourses[currentCourseIndex].tests[currentTestIndex].questions[currentQuestionIndex].answers[answerIndex].right = e.checked
     }
 
     function deleteCourse(courseIndex) {
