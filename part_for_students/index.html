@@ -5,17 +5,18 @@
     <title>Choose test to pass:</title>
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./styles.css">
-    <!-- Material Design Bootstrap -->
-    <link rel="stylesheet" href="css/mdb.min.css">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="lib/bootstrap-4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="lib/bootstrap-4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./lib/bootstrap-4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Scripts -->
-    <script src="lib/85609d285c.js" crossorigin="anonymous"></script>
+    <script src="./lib/85609d285c.js" crossorigin="anonymous"></script>
     <!-- jQuery, Bootstrap JS -->
-    <script src="lib/jquery-3.3.1.slim.min.js"></script>
+    <script src="./lib/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="./lib/bootstrap-4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="css/mdb.min.css">
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
@@ -202,14 +203,14 @@
   }
   
   function getTest(courseId, testId) {
-    if (courseId > -1 && courseId < globalCourses.length) {
-      if (testId > -1 && testId < globalCourses[courseId].tests.length) {
+    if (courseId > (-1) && courseId < globalCourses.length) {
+      if (testId > (-1) && testId < globalCourses[courseId].tests.length) {
         currentCourseIndex = courseId;
         currentTestIndex = testId;
-        return globalCourses[courseId].tests[testId]
+        return globalCourses[courseId].tests[testId];
       }
     }
-    return undefined
+    return undefined;
   }
 
   function fillTest(test) {
@@ -291,11 +292,11 @@
   }
 
   function calculateResult() {
-    if (-1 < currentCourseIndex < globalCourses.length) {
-      if (-1 < currentTestIndex < globalCourses[currentCourseIndex].tests.length) {
-        console.log('calculateResult');
-        let test = getTest(currentCourseIndex, currentCourseIndex);
+    if ( currentCourseIndex > (-1) && currentCourseIndex < globalCourses.length) {
+      if ( currentTestIndex > (-1) && currentTestIndex < globalCourses[currentCourseIndex].tests.length) {
+        let test = globalCourses[currentCourseIndex].tests[currentTestIndex];
         let res = 0;
+        let total = 0;
 
         for (let i=0; i < test.questions.length; i++) {
           let rightAnswer = test.questions[i].answers.map((_, i) => i).filter(e => test.questions[i].answers[e].right);
@@ -310,15 +311,20 @@
             }
           }
 
-          res += (rightAnswer == ourAnswer) ? 1 : 0;
+          res += (rightAnswer == ourAnswer) ? test.questions[i].cost : 0;
+          total += test.questions[i].cost;
         }
 
-        return (res/test.questions.length*100).toFixed(2);
+        return (res/total*100).toFixed(2);
 
+      }
+      else {
+        return 'empty';
       }
     }
     else {
       console.log('Smth went wrong - currentCourseId='+currentCourseIndex+' currentTestId='+currentTestIndex);
+      return 'empty';
     }
 
   }
@@ -338,7 +344,6 @@
     element.appendChild(tag2);
   }
 
-  //fillAllCoursesListTable();
   togglePage("MAIN_PAGE");
 
 </script>
