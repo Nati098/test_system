@@ -228,6 +228,9 @@
       element += '<div class="list-group-item">';
       element += '<h5 id="questionNumber">Вопрос '+(index1+1)+'</h5>';
       element += '<p id="questionName">'+value1.questionName+'</p>';
+      // if (value1.img != null) {
+      //   element += '<img id="img"'+index1+'>'+value1.questionName+'</img>';
+      // }
       element += '<div id="answers'+index1+'">';
 
       value1.answers.forEach((value2, index2) => {
@@ -235,7 +238,7 @@
         let answer = '';
 
         answer += '<div class="form-check">';
-        answer += '<input id="'+index+'" name="answer'+index1+'" class="form-check-input" type="radio">';
+        answer += '<input id="'+index+'" name="answer'+index1+'" class="form-check-input" type="checkbox">';
         answer += '<label class="form-check-label" for="'+index+'">'+value2.answerName+'</label>';
         answer += '</div>';
 
@@ -299,24 +302,6 @@
         let test = globalCourses[currentCourseIndex].tests[currentTestIndex];
         let res = 0;
         let total = 0;
-
-        // "single-choice scenario
-        // for (let i=0; i < test.questions.length; i++) {
-        //   let rightAnswer = test.questions[i].answers.map((_, i) => i).filter(e => test.questions[i].answers[e].right);
-        //
-        //   let ourAnswer = -1;
-        //   let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
-        //   for (let rb of rbs) {
-        //     if (rb.checked) {
-        //       let ourAnswerId = rb.id;
-        //       ourAnswer = ourAnswerId.substr(ourAnswerId.length - 1);
-        //       break;
-        //     }
-        //   }
-        //
-        //   res += (rightAnswer == ourAnswer) ? test.questions[i].cost : 0;
-        //   total += test.questions[i].cost;
-        // }
 
         for (let i=0; i < test.questions.length; i++) {
           let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
