@@ -300,20 +300,40 @@
         let res = 0;
         let total = 0;
 
-        for (let i=0; i < test.questions.length; i++) {
-          let rightAnswer = test.questions[i].answers.map((_, i) => i).filter(e => test.questions[i].answers[e].right);
+        // "single-choice scenario
+        // for (let i=0; i < test.questions.length; i++) {
+        //   let rightAnswer = test.questions[i].answers.map((_, i) => i).filter(e => test.questions[i].answers[e].right);
+        //
+        //   let ourAnswer = -1;
+        //   let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
+        //   for (let rb of rbs) {
+        //     if (rb.checked) {
+        //       let ourAnswerId = rb.id;
+        //       ourAnswer = ourAnswerId.substr(ourAnswerId.length - 1);
+        //       break;
+        //     }
+        //   }
+        //
+        //   res += (rightAnswer == ourAnswer) ? test.questions[i].cost : 0;
+        //   total += test.questions[i].cost;
+        // }
 
-          let ourAnswer = -1;
+        for (let i=0; i < test.questions.length; i++) {
           let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
-          for (let rb of rbs) {
-            if (rb.checked) {
-              let ourAnswerId = rb.id;
-              ourAnswer = ourAnswerId.substr(ourAnswerId.length - 1);
+          let isCorrect = true;
+
+          console.log('Question '+i);
+          for (let j=0; j < test.questions[i].answers.length; j++) {
+            let rightAnswer = test.questions[i].answers[j];
+            if ((rbs[j].checked) !== (rightAnswer.right)) {
+              isCorrect = false;
               break;
             }
           }
 
-          res += (rightAnswer == ourAnswer) ? test.questions[i].cost : 0;
+          if (isCorrect) {
+              res += test.questions[i].cost;
+          }
           total += test.questions[i].cost;
         }
 
