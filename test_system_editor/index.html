@@ -41,6 +41,8 @@
 
     <a role="button" class="btn btn-outline-indigo" id="saver-button" onclick="saveGlobalCoursesToFile(event)">Сохранить<i
         class="fas fa-save pl-1"></i></a>
+
+    <button class="btn btn-outline-indigo" onclick="onHelpClick()" style="float: right;" >Помощь <i class="fas fa-question-circle"></i></button>
   </div>
 
   <br>
@@ -75,6 +77,8 @@
         class="fas fa-plus-square pl-1"></i></a>
     <a role="button" onclick="viewAllCoursesListTable()" class="btn btn-outline-orange">Назад<i
         class="fas fa-backward pl-1"></i></a>
+    <button class="btn btn-outline-indigo" onclick="onHelpClick()" style="float: right;" >Помощь <i class="fas fa-question-circle"></i></button>
+
   </div>
 
   <table class="table table-bordered table-striped" cellspacing="0" width="100%">
@@ -113,6 +117,8 @@
         class="fas fa-plus-square pl-1"></i></a>
     <a role="button" onclick="viewCoursePage()" class="btn btn-outline-orange">Назад<i
         class="fas fa-backward pl-1"></i></a>
+    <button class="btn btn-outline-indigo" onclick="onHelpClick()" style="float: right;" >Помощь <i class="fas fa-question-circle"></i></button>
+
   </div>
 
   <table class="table table-bordered table-striped" cellspacing="0" width="100%">
@@ -146,6 +152,8 @@
     </div>
   </div>
 
+  <button class="btn btn-outline-indigo" onclick="onHelpClick()" style="float: right;" >Помощь <i class="fas fa-question-circle"></i></button>
+
   <table class="table-responsive-md">
     <table class="table table-borderless" cellspacing="0">
       <thead>
@@ -171,6 +179,11 @@
 </html>
 
 <script>
+
+  function onHelpClick() {
+    alert('На подорожник!');
+    // TODO
+  }
 
     function loadGlobalCoursesFromFile(files) {
         if (files.length > 0) {
