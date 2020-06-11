@@ -104,7 +104,7 @@
       <div id="list-questions" class="list-group">
       </div>
 
-      <a id="button-finish" role="button" onclick="getResult()" class="btn btn-outline-indigo">Завершить тест<i class="fas fa-backward pl-1"></i></a>
+      <a id="button-finish" role="button" onclick="getResult(event)" class="btn btn-outline-indigo">Завершить тест<i class="fas fa-backward pl-1"></i></a>
 
       <!--here the result of test will be-->
       <div id="result-field">
@@ -151,6 +151,13 @@
     return decodeURIComponent(atob(str).split('').map(function (c) {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
+  }
+
+  function b64EncodeUnicode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+              return String.fromCharCode('0x' + p1);
+            }));
   }
 
   function fillAllCoursesListTable() {
@@ -275,7 +282,7 @@
 
   }
 
-  function getResult() {
+  function getResult(e) {
 
     if (document.getElementById('fio-input').value === "" && document.getElementById('group-input').value === "") {
       alert('Не заполнено поле ФИО и/или группы! Заполните поля и повторите попытку.');
@@ -283,6 +290,8 @@
     }
 
     let res = calculateResult();
+
+    save_results_in_file(e, res);
 
     $('#list-questions').empty();
     $('#button-finish').remove();
@@ -333,6 +342,58 @@
       return 'empty';
     }
 
+  }
+
+  function save_results_in_file(e, res) {
+    let buf = [];
+
+    console.log($('#course-name-field').val());
+    console.log($('#test-name-field').val());
+    console.log(document.getElementById('fio-input').value);
+    console.log(document.getElementById('group-input').value);
+
+    let questionsList = [];
+
+    let test = globalCourses[currentCourseIndex].tests[currentTestIndex];
+
+    for (let i=0; i < test.questions.length; i++) {
+      let answersList = [];
+
+      let rbs = document.querySelectorAll('input[name="answer'+i+'"]');
+      for (let j=0; j < test.questions[i].answers.length; j++) {
+        let a = rbs[j].checked;
+        answersList.push({
+          "answerName": test.questions[i].answers[j].answerName,
+          "right": a,
+        });
+      }
+
+      questionsList.push({
+        "questionName": test.questions[i].questionName,
+        "answers": answersList,
+      });
+    }
+
+    buf.push({
+      "courseName_":  $('#course-name-field').val(),
+      "testName_": $('#test-name-field').val(),
+      "fio_": document.getElementById('fio-input').value,
+      "group_": document.getElementById('group-input').value,
+      "result_": res,
+      "questions_": questionsList,
+    });
+
+    console.log(buf);
+
+    saveGlobalCoursesToFile(e, buf);
+  }
+
+  function saveGlobalCoursesToFile(e, data) {
+    let jsonStr = JSON.stringify(data).split("").reverse().join("");
+    let blob = new Blob([b64EncodeUnicode(jsonStr)], {type: 'text/plain'});
+    let link = $('#button-finish');
+    link.attr('download', 'courses');
+    link.attr('href', URL.createObjectURL(blob));
   }
 
   function addResultInfo(res) {

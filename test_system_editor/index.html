@@ -28,6 +28,23 @@
 </head>
 
 <body>
+
+<div id="main_menu">
+
+  <div align="center">
+    <h1>Для продолжения выберите опцию:</h1>
+
+    <a role="button" class="btn btn-outline-indigo" onclick="viewAllCoursesListTable()">Перейти в редактор тестов</a>
+    <p></p>
+    <a role="button" class="btn btn-outline-indigo" onclick="$('#loader-input-answers').trigger('click')">Посмотреть ответы стулента на тест</a>
+    <input id="loader-input-answers" type="file" style="display:none" onchange="loadTestFromFile(this.files)">
+    <p></p>
+    <button class="btn btn-outline-indigo" onclick="onHelpClick()" >Помощь</button>
+
+  </div>
+
+</div>
+
 <!--  ALL COURSES LIST PAGE-->
 <div id="main">
   <div style="margin-left: 8px; margin-top: 8px">
@@ -41,6 +58,9 @@
 
     <a role="button" class="btn btn-outline-indigo" id="saver-button" onclick="saveGlobalCoursesToFile(event)">Сохранить<i
         class="fas fa-save pl-1"></i></a>
+
+    <a role="button" onclick="togglePage('MAIN_MENU_PAGE')" class="btn btn-outline-orange">Назад<i
+            class="fas fa-backward pl-1"></i></a>
 
     <button class="btn btn-outline-indigo" onclick="onHelpClick()" style="float: right;" >Помощь <i class="fas fa-question-circle"></i></button>
   </div>
@@ -171,14 +191,68 @@
       class="fas fa-backward pl-1"></i></a>
 </div>
 
+<!-- CHECK TEST PAGE -->
+<div id="test" style="display: none">
+
+  <a id="button-back" role="button" onclick="togglePage('MAIN_MENU_PAGE')" class="btn btn-outline-indigo">Назад<i class="fas fa-backward pl-1"></i></a>
+
+  <div id="mainInfo" class="table-responsive text-nowrap">
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Курс:</span>
+            </div>
+            <input id="course-name-field-check-test" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название курса" readonly>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">ФИО</span>
+            </div>
+            <input id="fio-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+          </div>
+
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Название теста:</span>
+            </div>
+            <input id="test-name-field" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="Здесь будет название теста" readonly>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Группа</span>
+            </div>
+            <input id="group-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Результат</span>
+            </div>
+            <input id="result-input" class="form-control" type="text" aria-label="Default" aria-describedby="inputGroup-sizing-default" readonly>
+          </div>
+
+
+
+
+  </div>
+
+  <!--here the list of questions-->
+  <div id="list-questions" class="list-group">
+  </div>
+
+</div>
+
+
 </body>
 </html>
 
 <script>
 
-  function onHelpClick() {
-    alert('На подорожник!');
-    // TODO
+    function onHelpClick() {
+    window.open('manual.pdf', '_blank', 'fullscreen=yes');
+    return false;
   }
 
     function loadGlobalCoursesFromFile(files) {
@@ -214,11 +288,91 @@
         link.attr('href', URL.createObjectURL(blob));
     }
 
+    function loadTestFromFile(files) {
+      if (files.length > 0) {
+        let reader = new FileReader();
+        reader.readAsText(files[0], "UTF-8");
+        reader.onload = function (evt) {
+          let raw = b64DecodeUnicode(evt.target.result).split("").reverse().join("");
+          let obj = JSON.parse(raw);
+          console.log(obj);
+
+          if (obj !== undefined) {
+            globalCourses = obj;
+
+            fillTest(globalCourses);
+            togglePage('CHECK_TEST_PAGE');
+          } else {
+            alert("Ошибка формата входного файла")
+          }
+        };
+        reader.onerror = function (evt) {
+          alert("Ошибка чтения входного файла")
+        };
+      }
+
+    }
+
+    function fillTest(data) {
+      data = data[0];
+      $('#course-name-field').val(data.courseName_);
+      $('#test-name-field').val(data.testName_);
+      $('#fio-input').val(data.fio_);
+      $('#group-input').val(data.group_);
+      $('#result-input').val(data.result_);
+
+
+      let questionsList = $('#list-questions');
+      questionsList.empty();
+
+      data.questions_.forEach((value1, index1) => {
+        let element = '';
+        console.log("asdasda");
+        console.log(value1);
+
+        element += '<div class="list-group-item">';
+        element += '<h5 id="questionNumber">Вопрос '+(index1+1)+'</h5>';
+        element += '<p id="questionName">'+value1.questionName+'</p>';
+        // if (value1.img != null) {
+        //   element += '<img id="img"'+index1+'>'+value1.questionName+'</img>';
+        // }
+        element += '<div id="answers'+index1+'">';
+
+        value1.answers.forEach((value2, index2) => {
+          let index = 'answer'+index1+''+index2;
+          let answer = '';
+
+          let checked='';
+          if (value2.right) {
+            checked = 'checked';
+          }
+
+          answer += '<div class="form-check">';
+          answer += '<input id="'+index+'" name="answer'+index1+'" class="form-check-input" type="checkbox" disabled '+checked+'>';
+          answer += '<label class="form-check-label" for="'+index+'">'+value2.answerName+'</label>';
+          answer += '</div>';
+
+          element += answer;
+        });
+
+        element += '</div>';
+        element += '</div>';
+
+        questionsList.append(element);
+      });
+
+  }
+
+
     let globalCourses = [];
 
     let currentCourseIndex = -1;
     let currentTestIndex = -1;
     let currentQuestionIndex = -1;
+
+    function viewMainMenu() {
+      togglePage("MAIN_MENU_PAGE");
+    }
 
     function viewAllCoursesListTable() {
         let allCoursesListTable = $("#all-courses-table-list");
@@ -546,6 +700,8 @@
             $("#edit_course").hide();
             $("#edit_test").hide();
             $("#edit_question").hide();
+            $("#test").hide();
+            $("#main_menu").hide();
             $("#main").show();
 
             return
@@ -555,6 +711,8 @@
             $("#edit_test").hide();
             $("#edit_question").hide();
             $("#main").hide();
+            $("#test").hide();
+            $("#main_menu").hide();
             $("#edit_course").show();
 
             return
@@ -564,6 +722,8 @@
             $("#edit_course").hide();
             $("#edit_question").hide();
             $("#main").hide();
+            $("#test").hide();
+            $("#main_menu").hide();
             $("#edit_test").show();
 
             return
@@ -573,13 +733,39 @@
             $("#edit_course").hide();
             $("#edit_test").hide();
             $("#main").hide();
+            $("#test").hide();
+            $("#main_menu").hide();
             $("#edit_question").show();
 
             return
         }
+
+        if (page === "CHECK_TEST_PAGE") {
+          $("#edit_course").hide();
+          $("#edit_test").hide();
+          $("#main").hide();
+          $("#edit_question").hide();
+          $("#main_menu").hide();
+          $("#test").show();
+
+          return
+        }
+
+        if (page === "MAIN_MENU_PAGE") {
+          $("#edit_course").hide();
+          $("#edit_test").hide();
+          $("#main").hide();
+          $("#edit_question").hide();
+          $("#test").hide();
+          $("#main_menu").show();
+
+          return
+        }
+
     }
 
     // INIT SPA
-    viewAllCoursesListTable();
+    viewMainMenu();
+
 
 </script>
