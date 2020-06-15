@@ -36,7 +36,7 @@
 
     <a role="button" class="btn btn-outline-indigo" onclick="viewAllCoursesListTable()">Перейти в редактор тестов</a>
     <p></p>
-    <a role="button" class="btn btn-outline-indigo" onclick="$('#loader-input-answers').trigger('click')">Посмотреть ответы стулента на тест</a>
+    <a role="button" class="btn btn-outline-indigo" onclick="$('#loader-input-answers').trigger('click')">Посмотреть ответы студента на тест</a>
     <input id="loader-input-answers" type="file" style="display:none" onchange="loadTestFromFile(this.files)">
     <p></p>
     <button class="btn btn-outline-indigo" onclick="onHelpClick()" >Помощь</button>
@@ -315,7 +315,8 @@
 
     function fillTest(data) {
       data = data[0];
-      $('#course-name-field').val(data.courseName_);
+
+      $('#course-name-field-check-test').val(data.courseName_);
       $('#test-name-field').val(data.testName_);
       $('#fio-input').val(data.fio_);
       $('#group-input').val(data.group_);
